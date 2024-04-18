@@ -1,0 +1,83 @@
+Only if you click on a floor button, then elevator moves, to that direction.
+
+If we click on one of the floor buttons, after we already clicked once, we need to calculate which elevator is the closest by absolute value , and this is the elevator that would need to go to that floor.
+
+If there are more than one elevator in the same distance, we would pick one randomly.
+
+Clicking on a button would call an elevator to the floor' even if at the moment, there isn't one free to go there.
+
+The elevators would move at speed of 0.5 second per floor. when they arrive they wait there for 2 seconds.
+
+The animation should be displayed smoothly- and not jumping between floors.
+
+after inviting elevator to a floor there would be a timer display that would show the expected time until the elevator comes.
+
+the elevator alg' should bring to the lowest waiting time possible, without increasing the waiting time for those who already invited the elevator
+
+@startuml
+
+class Building {
+    -floors: number
+    -elevators: Elevator[]
+    -floorObjects: Floor[]
+    +constructor(floors: number, elevators: number)
+    +addElevator(elevator: Elevator): void
+    +getFloorCount(): number
+    +getElevatorCount(): number
+    +getElevator(index: number): Elevator
+    +getFloorObject(floorNumber: number): Floor
+    +initializeBuildingUI(): void
+    +updateElevatorUI(elevatorIndex: number): void
+    +requestElevator(floor: number): void
+}
+
+class Elevator {
+    -currentFloor: Floor
+    -destinationFloor: Floor
+    -isMoving: boolean
+    -isAvailable: boolean
+    -timer: Timer
+    -doorOpen: boolean
+    -requestedFloors: Floor[]
+    +moveTo(floor: Floor): void
+    +isAvailable(): boolean
+    +request(floor: Floor): void
+    +stop(): void
+    +tick(): void
+    +setTimer(timer: Timer): void
+    +openDoor(): void
+    +closeDoor(): void
+    +addRequestedFloor(floor: Floor): void
+    +clearRequestedFloors(): void
+    +isDoorOpen(): boolean
+}
+
+class Floor {
+    -number: number
+    +constructor(number: number)
+    +getNumber(): number
+}
+
+class Timer {
+    -remainingTime: number
+    +constructor()
+    +startTimer(duration: number): void
+    +stopTimer(): void
+    +getRemainingTime(): number
+}
+
+Building "1" *-- "*" Elevator : contains
+Building "1" *-- "*" Floor : has
+Elevator "1" -- "1" Timer : uses
+Elevator "1" -- "*" Floor : has requested
+Elevator "1" -- "0..1" Floor : current floor
+Floor "1" *-- "*" Elevator : has elevator
+
+@enduml
+
+Here's a basic algorithm we can use:
+
+When a floor request is made, calculate the distance between each elevator and the requested floor.
+Assign the request to the elevator with the shortest distance to the floor.
+If an elevator is moving and has a queue, calculate the distance between the last floor in its queue and the requested floor. If the distance is shorter than the current closest distance for any other elevator, assign the request to that elevator instead.
+If all elevators are idle, assign the request to the closest elevator.
