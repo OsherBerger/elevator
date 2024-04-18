@@ -11,6 +11,7 @@ var Elevator = /** @class */ (function () {
         this.queue = [];
         this.isWaiting = false;
         this.elevatorElement = element;
+        this.updateElevatorPosition(); // Add this line to set the initial position
     }
     Elevator.prototype.move = function (floor) {
         var _this = this;
@@ -29,17 +30,16 @@ var Elevator = /** @class */ (function () {
                 console.log("Elevator arrived at floor ".concat(_this.currentFloor.level));
                 _this.playSound();
                 _this.updateElevatorPosition();
-                _this.isMoving = false;
-                if (_this.queue.length > 0) {
-                    _this.isWaiting = true;
-                    setTimeout(function () {
-                        _this.isWaiting = false;
+                setTimeout(function () {
+                    _this.isMoving = false;
+                    if (_this.queue.length > 0) {
+                        _this.isWaiting = true;
                         var nextFloor = _this.queue.shift();
                         if (nextFloor) {
                             _this.move(nextFloor);
                         }
-                    }, 2000);
-                }
+                    }
+                }, 2000);
             });
         }
         else {

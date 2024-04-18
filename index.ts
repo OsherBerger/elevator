@@ -19,6 +19,8 @@ class Elevator {
     this.queue = [];
     this.isWaiting = false;
     this.elevatorElement = element;
+    this.updateElevatorPosition(); // Add this line to set the initial position
+
   }
 
   move(floor: Floor) {
@@ -29,7 +31,7 @@ class Elevator {
 
       // Calculate the distance and duration of the animation
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 5 ;
+      const animationDuration = distance * 5;
 
       // Ensure animationDuration is non-negative
       const duration = Math.max(animationDuration, 0);
@@ -40,22 +42,21 @@ class Elevator {
         console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
         this.playSound();
         this.updateElevatorPosition();
-        this.isMoving = false;
-        if (this.queue.length > 0) {
-          this.isWaiting = true;
-          setTimeout(() => {
-            this.isWaiting = false;
+        setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
+          this.isMoving = false;
+          if (this.queue.length > 0) {
+            this.isWaiting = true;
             const nextFloor = this.queue.shift();
             if (nextFloor) {
               this.move(nextFloor);
             }
-          }, 2000);
-        }
+          }
+        }, 2000);
       });
     } else {
       this.queue.push(floor);
     }
-  }
+}
 
   // Function to animate the elevator's movement
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
@@ -153,3 +154,4 @@ function requestElevator(floor: Floor) {
 const numberOfFloors = 15;
 const building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer!);
 building.createFloorButtons();
+
