@@ -17,17 +17,7 @@
   height: 45px;
   position: relative; 
   margin-bottom: 15px;
-  /* animation: elevatorMovement var(--animation-duration) linear forwards; */
 }  
-
-/* @keyframes elevatorMovement {
-  0% {
-    transform: translateY(calc(( var(--current-floor)) * -57px));
-  }
-  100% {
-    transform: translateY(calc(( var(--target-floor)) * -57px)); 
-  }
-}  */
 
 
 .floor {
