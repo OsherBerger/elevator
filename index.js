@@ -11,7 +11,7 @@ var Elevator = /** @class */ (function () {
         this.queue = [];
         this.isWaiting = false;
         this.elevatorElement = element;
-        this.updateElevatorPosition(); // Add this line to set the initial position
+        this.updateElevatorPosition(); // Set the initial position
     }
     Elevator.prototype.move = function (floor) {
         var _this = this;
@@ -83,6 +83,27 @@ var Elevator = /** @class */ (function () {
     };
     return Elevator;
 }());
+var ElevatorSystem = /** @class */ (function () {
+    function ElevatorSystem(elevatorElements) {
+        this.elevators = elevatorElements.map(function (element) { return new Elevator(element); });
+    }
+    ElevatorSystem.prototype.requestElevator = function (floor) {
+        // Calculate the distance of each elevator to the requested floor
+        var distances = this.elevators.map(function (elevator) { return Math.abs(elevator.currentFloor.level - floor.level); });
+        // Find the index of the elevator with the minimum distance
+        var closestElevatorIndex = distances.indexOf(Math.min.apply(Math, distances));
+        // Request the floor for the closest elevator
+        this.elevators[closestElevatorIndex].requestFloor(floor);
+    };
+    return ElevatorSystem;
+}());
+// Usage example
+var elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
+var elevatorSystem = new ElevatorSystem(elevatorElements.map(function (el) { return el; }));
+function requestElevator(floor) {
+    elevatorSystem.requestElevator(floor);
+}
+// Create a Building class and BuildingFactory class if needed
 var Building = /** @class */ (function () {
     function Building(numberOfFloors, floorButtonsContainer) {
         this.numberOfFloors = numberOfFloors;
@@ -122,12 +143,12 @@ var BuildingFactory = /** @class */ (function () {
 var floorButtonsContainer = document.getElementById('floorButtonsContainer');
 var buildingFactory = new BuildingFactory();
 var elevator = null;
-function requestElevator(floor) {
-    if (!elevator) {
-        elevator = new Elevator(document.querySelector('.elevator img'));
-    }
-    elevator.requestFloor(floor);
-}
+// function requestElevator(floor: Floor) {
+//   if (!elevator) {
+//     elevator = new Elevator(document.querySelector('.elevator img')!);
+//   }
+//   elevator.requestFloor(floor);
+// }
 var numberOfFloors = 15;
 var building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
 building.createFloorButtons();

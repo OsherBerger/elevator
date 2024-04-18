@@ -19,8 +19,7 @@ class Elevator {
     this.queue = [];
     this.isWaiting = false;
     this.elevatorElement = element;
-    this.updateElevatorPosition(); // Add this line to set the initial position
-
+    this.updateElevatorPosition(); // Set the initial position
   }
 
   move(floor: Floor) {
@@ -56,7 +55,7 @@ class Elevator {
     } else {
       this.queue.push(floor);
     }
-}
+  }
 
   // Function to animate the elevator's movement
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
@@ -98,6 +97,36 @@ class Elevator {
     this.elevatorElement.style.transform = `translateY(${translateY})`;
   }
 }
+
+class ElevatorSystem {
+  elevators: Elevator[];
+
+  constructor(elevatorElements: HTMLElement[]) {
+    this.elevators = elevatorElements.map(element => new Elevator(element));
+  }
+
+  requestElevator(floor: Floor) {
+    // Calculate the distance of each elevator to the requested floor
+    const distances = this.elevators.map(elevator => Math.abs(elevator.currentFloor.level - floor.level));
+
+    // Find the index of the elevator with the minimum distance
+    const closestElevatorIndex = distances.indexOf(Math.min(...distances));
+
+    // Request the floor for the closest elevator
+    this.elevators[closestElevatorIndex].requestFloor(floor);
+  }
+}
+
+// Usage example
+const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
+const elevatorSystem = new ElevatorSystem(elevatorElements.map(el => el as HTMLElement));
+
+function requestElevator(floor: Floor) {
+  elevatorSystem.requestElevator(floor);
+}
+
+// Create a Building class and BuildingFactory class if needed
+
 
 class Building {
   numberOfFloors: number;
@@ -143,12 +172,12 @@ const buildingFactory = new BuildingFactory();
 
 let elevator: Elevator | null = null;
 
-function requestElevator(floor: Floor) {
-  if (!elevator) {
-    elevator = new Elevator(document.querySelector('.elevator img')!);
-  }
-  elevator.requestFloor(floor);
-}
+// function requestElevator(floor: Floor) {
+//   if (!elevator) {
+//     elevator = new Elevator(document.querySelector('.elevator img')!);
+//   }
+//   elevator.requestFloor(floor);
+// }
 
 
 const numberOfFloors = 15;
