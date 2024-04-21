@@ -24,6 +24,7 @@ class Elevator {
 
   move(floor: Floor) {
     if (!this.isMoving) {
+      // If the elevator is not moving, start moving to the requested floor
       this.isMoving = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;
@@ -53,7 +54,10 @@ class Elevator {
         }, 2000);
       });
     } else {
+      // If the elevator is already moving, add the floor to the queue
       this.queue.push(floor);
+      // Update the flag to indicate that the elevator is waiting for its current movement to finish
+      this.isWaiting = true;
     }
   }
 
