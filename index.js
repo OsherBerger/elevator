@@ -13,6 +13,41 @@ var Elevator = /** @class */ (function () {
         this.elevatorElement = element;
         this.updateElevatorPosition(); // Set the initial position
     }
+    // move(floor: Floor) {
+    //   if (!this.isMoving) {
+    //     // If the elevator is not moving, start moving to the requested floor
+    //     this.isMoving = true;
+    //     const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
+    //     const targetY = -57 * floor.level;
+    //     // Calculate the distance and duration of the animation
+    //     const distance = Math.abs(targetY - currentY);
+    //     const animationDuration = distance * 5;
+    //     // Ensure animationDuration is non-negative
+    //     const duration = Math.max(animationDuration, 0);
+    //     // Animate the elevator's movement
+    //     this.animateElevator(currentY, targetY, duration, () => {
+    //       this.currentFloor = floor;
+    //       console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
+    //       this.playSound();
+    //       this.updateElevatorPosition();
+    //       setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
+    //         this.isMoving = false;
+    //         if (this.queue.length > 0) {
+    //           this.isWaiting = true;
+    //           const nextFloor = this.queue.shift();
+    //           if (nextFloor) {
+    //             this.move(nextFloor);
+    //           }
+    //         }
+    //       }, 2000);
+    //     });
+    //   } else {
+    //     // If the elevator is already moving, add the floor to the queue
+    //     this.queue.push(floor);
+    //     // Update the flag to indicate that the elevator is waiting for its current movement to finish
+    //     this.isWaiting = true;
+    //   }
+    // }
     Elevator.prototype.move = function (floor) {
         var _this = this;
         if (!this.isMoving) {
@@ -34,11 +69,13 @@ var Elevator = /** @class */ (function () {
                 setTimeout(function () {
                     _this.isMoving = false;
                     if (_this.queue.length > 0) {
-                        _this.isWaiting = true;
                         var nextFloor = _this.queue.shift();
                         if (nextFloor) {
                             _this.move(nextFloor);
                         }
+                    }
+                    else {
+                        _this.isWaiting = false; // Reset isWaiting flag
                     }
                 }, 2000);
             });

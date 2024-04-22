@@ -22,44 +22,85 @@ class Elevator {
     this.updateElevatorPosition(); // Set the initial position
   }
 
+  // move(floor: Floor) {
+  //   if (!this.isMoving) {
+  //     // If the elevator is not moving, start moving to the requested floor
+  //     this.isMoving = true;
+  //     const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
+  //     const targetY = -57 * floor.level;
+
+  //     // Calculate the distance and duration of the animation
+  //     const distance = Math.abs(targetY - currentY);
+  //     const animationDuration = distance * 5;
+
+  //     // Ensure animationDuration is non-negative
+  //     const duration = Math.max(animationDuration, 0);
+
+  //     // Animate the elevator's movement
+  //     this.animateElevator(currentY, targetY, duration, () => {
+  //       this.currentFloor = floor;
+  //       console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
+  //       this.playSound();
+  //       this.updateElevatorPosition();
+  //       setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
+  //         this.isMoving = false;
+  //         if (this.queue.length > 0) {
+  //           this.isWaiting = true;
+  //           const nextFloor = this.queue.shift();
+  //           if (nextFloor) {
+  //             this.move(nextFloor);
+  //           }
+  //         }
+  //       }, 2000);
+  //     });
+  //   } else {
+  //     // If the elevator is already moving, add the floor to the queue
+  //     this.queue.push(floor);
+  //     // Update the flag to indicate that the elevator is waiting for its current movement to finish
+  //     this.isWaiting = true;
+  //   }
+  // }
+
   move(floor: Floor) {
     if (!this.isMoving) {
-      // If the elevator is not moving, start moving to the requested floor
-      this.isMoving = true;
-      const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
-      const targetY = -57 * floor.level;
+        // If the elevator is not moving, start moving to the requested floor
+        this.isMoving = true;
+        const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
+        const targetY = -57 * floor.level;
 
-      // Calculate the distance and duration of the animation
-      const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 5;
+        // Calculate the distance and duration of the animation
+        const distance = Math.abs(targetY - currentY);
+        const animationDuration = distance * 5;
 
-      // Ensure animationDuration is non-negative
-      const duration = Math.max(animationDuration, 0);
+        // Ensure animationDuration is non-negative
+        const duration = Math.max(animationDuration, 0);
 
-      // Animate the elevator's movement
-      this.animateElevator(currentY, targetY, duration, () => {
-        this.currentFloor = floor;
-        console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
-        this.playSound();
-        this.updateElevatorPosition();
-        setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
-          this.isMoving = false;
-          if (this.queue.length > 0) {
-            this.isWaiting = true;
-            const nextFloor = this.queue.shift();
-            if (nextFloor) {
-              this.move(nextFloor);
-            }
-          }
-        }, 2000);
-      });
+        // Animate the elevator's movement
+        this.animateElevator(currentY, targetY, duration, () => {
+            this.currentFloor = floor;
+            console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
+            this.playSound();
+            this.updateElevatorPosition();
+            setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
+                this.isMoving = false;
+                if (this.queue.length > 0) {
+                    const nextFloor = this.queue.shift();
+                    if (nextFloor) {
+                        this.move(nextFloor);
+                    }
+                } else {
+                    this.isWaiting = false; // Reset isWaiting flag
+                }
+            }, 2000);
+        });
     } else {
-      // If the elevator is already moving, add the floor to the queue
-      this.queue.push(floor);
-      // Update the flag to indicate that the elevator is waiting for its current movement to finish
-      this.isWaiting = true;
+        // If the elevator is already moving, add the floor to the queue
+        this.queue.push(floor);
+        // Update the flag to indicate that the elevator is waiting for its current movement to finish
+        this.isWaiting = true;
     }
-  }
+}
+
 
   // Function to animate the elevator's movement
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
