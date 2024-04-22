@@ -31,7 +31,7 @@ move(floor: Floor) {
 
       // Calculate the distance and duration of the animation
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 5;
+      const animationDuration = distance * 8;
 
       // Ensure animationDuration is non-negative
       const duration = Math.max(animationDuration, 0);

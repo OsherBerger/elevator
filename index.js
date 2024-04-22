@@ -22,7 +22,7 @@ var Elevator = /** @class */ (function () {
             var targetY = -57 * floor.level;
             // Calculate the distance and duration of the animation
             var distance = Math.abs(targetY - currentY);
-            var animationDuration = distance * 5;
+            var animationDuration = distance * 8;
             // Ensure animationDuration is non-negative
             var duration = Math.max(animationDuration, 0);
             // Animate the elevator's movement
