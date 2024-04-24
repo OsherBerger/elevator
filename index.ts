@@ -104,6 +104,8 @@ move(floor: Floor) {
   }
 }
 
+
+
 class ElevatorSystem {
   elevators: Elevator[];
 
@@ -112,16 +114,27 @@ class ElevatorSystem {
   }
 
   requestElevator(floor: Floor) {
-    // Calculate the distance of each elevator to the requested floor
-    const distances = this.elevators.map(elevator => Math.abs(elevator.currentFloor.level - floor.level));
+    // Find all available elevators
+    const availableElevators = this.elevators.filter(elevator => !elevator.isMoving);
 
-    // Find the index of the elevator with the minimum distance
-    const closestElevatorIndex = distances.indexOf(Math.min(...distances));
+    if (availableElevators.length > 0) {
+      // Calculate the distance of each available elevator to the requested floor
+      const distances = availableElevators.map(elevator => Math.abs(elevator.currentFloor.level - floor.level));
 
-    // Request the floor for the closest elevator
-    this.elevators[closestElevatorIndex].requestFloor(floor);
+      // Find the index of the nearest available elevator
+      const closestElevatorIndex = distances.indexOf(Math.min(...distances));
+
+      // Request the floor for the nearest available elevator
+      availableElevators[closestElevatorIndex].requestFloor(floor);
+    } else {
+      // If all elevators are busy, queue the request until an elevator becomes available
+      const distances = this.elevators.map(elevator => Math.abs(elevator.currentFloor.level - floor.level));
+      const closestElevatorIndex = distances.indexOf(Math.min(...distances));
+      this.elevators[closestElevatorIndex].queue.push(floor);
+    }
   }
 }
+
 
 // Usage example
 const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
@@ -134,10 +147,14 @@ function requestElevator(floor: Floor) {
 class Building {
   numberOfFloors: number;
   floorButtonsContainer: HTMLElement;
+  timers: HTMLElement[];
+  elevator: Elevator | null;
 
   constructor(numberOfFloors: number, floorButtonsContainer: HTMLElement) {
     this.numberOfFloors = numberOfFloors;
     this.floorButtonsContainer = floorButtonsContainer;
+    this.timers = [];
+    this.elevator = null;
   }
 
   createFloorButtons() {

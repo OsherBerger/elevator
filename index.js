@@ -94,12 +94,22 @@ var ElevatorSystem = /** @class */ (function () {
         this.elevators = elevatorElements.map(function (element) { return new Elevator(element); });
     }
     ElevatorSystem.prototype.requestElevator = function (floor) {
-        // Calculate the distance of each elevator to the requested floor
-        var distances = this.elevators.map(function (elevator) { return Math.abs(elevator.currentFloor.level - floor.level); });
-        // Find the index of the elevator with the minimum distance
-        var closestElevatorIndex = distances.indexOf(Math.min.apply(Math, distances));
-        // Request the floor for the closest elevator
-        this.elevators[closestElevatorIndex].requestFloor(floor);
+        // Find all available elevators
+        var availableElevators = this.elevators.filter(function (elevator) { return !elevator.isMoving; });
+        if (availableElevators.length > 0) {
+            // Calculate the distance of each available elevator to the requested floor
+            var distances = availableElevators.map(function (elevator) { return Math.abs(elevator.currentFloor.level - floor.level); });
+            // Find the index of the nearest available elevator
+            var closestElevatorIndex = distances.indexOf(Math.min.apply(Math, distances));
+            // Request the floor for the nearest available elevator
+            availableElevators[closestElevatorIndex].requestFloor(floor);
+        }
+        else {
+            // If all elevators are busy, queue the request until an elevator becomes available
+            var distances = this.elevators.map(function (elevator) { return Math.abs(elevator.currentFloor.level - floor.level); });
+            var closestElevatorIndex = distances.indexOf(Math.min.apply(Math, distances));
+            this.elevators[closestElevatorIndex].queue.push(floor);
+        }
     };
     return ElevatorSystem;
 }());
@@ -113,6 +123,8 @@ var Building = /** @class */ (function () {
     function Building(numberOfFloors, floorButtonsContainer) {
         this.numberOfFloors = numberOfFloors;
         this.floorButtonsContainer = floorButtonsContainer;
+        this.timers = [];
+        this.elevator = null;
     }
     Building.prototype.createFloorButtons = function () {
         var _loop_1 = function (i) {
