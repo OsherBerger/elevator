@@ -204,7 +204,7 @@ const floorButtonsContainer = document.getElementById('floorButtonsContainer')!;
 const buildingFactory = new BuildingFactory();
 
 const numberOfFloors = 15;
-const numberOfElevators = 6;
+const numberOfElevators = 3;
 
 const elevatorSystem = new ElevatorSystem('elevatorsContainer', numberOfElevators); 
 const building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);

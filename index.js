@@ -182,6 +182,6 @@ var elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.el
 var floorButtonsContainer = document.getElementById('floorButtonsContainer');
 var buildingFactory = new BuildingFactory();
 var numberOfFloors = 15;
-var numberOfElevators = 6;
+var numberOfElevators = 3;
 var elevatorSystem = new ElevatorSystem('elevatorsContainer', numberOfElevators);
 var building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
