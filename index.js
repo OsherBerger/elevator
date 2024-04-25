@@ -113,9 +113,6 @@ var ElevatorSystem = /** @class */ (function () {
     };
     return ElevatorSystem;
 }());
-// Usage example
-var elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
-var elevatorSystem = new ElevatorSystem(elevatorElements.map(function (el) { return el; }));
 function requestElevator(floor) {
     elevatorSystem.requestElevator(floor);
 }
@@ -123,8 +120,7 @@ var Building = /** @class */ (function () {
     function Building(numberOfFloors, floorButtonsContainer) {
         this.numberOfFloors = numberOfFloors;
         this.floorButtonsContainer = floorButtonsContainer;
-        this.timers = [];
-        this.elevator = null;
+        this.createFloorButtons();
     }
     Building.prototype.createFloorButtons = function () {
         var _loop_1 = function (i) {
@@ -133,7 +129,7 @@ var Building = /** @class */ (function () {
             button.innerText = i.toString();
             button.addEventListener('click', function () {
                 requestElevator(new Floor(i));
-            }.bind(this_1));
+            });
             var div = document.createElement('div');
             div.classList.add('blackline');
             var floorDiv = document.createElement('div');
@@ -157,9 +153,9 @@ var BuildingFactory = /** @class */ (function () {
     };
     return BuildingFactory;
 }());
+var elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
+var elevatorSystem = new ElevatorSystem(elevatorElements);
 var floorButtonsContainer = document.getElementById('floorButtonsContainer');
 var buildingFactory = new BuildingFactory();
-var elevator = null;
 var numberOfFloors = 15;
 var building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
-building.createFloorButtons();

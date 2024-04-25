@@ -22,8 +22,8 @@ class Elevator {
     this.updateElevatorPosition(); // Set the initial position
   }
 
-move(floor: Floor) {
-  if (!this.isMoving) {
+  move(floor: Floor) {
+    if (!this.isMoving) {
       // If the elevator is not moving, start moving to the requested floor
       this.isMoving = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
@@ -38,30 +38,29 @@ move(floor: Floor) {
 
       // Animate the elevator's movement
       this.animateElevator(currentY, targetY, duration, () => {
-          this.currentFloor = floor;
-          console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
-          this.updateElevatorPosition();
-          this.playSound(); // Play the sound immediately after updating position
-          setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
-              this.isMoving = false;
-              if (this.queue.length > 0) {
-                  const nextFloor = this.queue.shift();
-                  if (nextFloor) {
-                      this.move(nextFloor);
-                  }
-              } else {
-                  this.isWaiting = false; // Reset isWaiting flag
-              }
-          }, 2000);
+        this.currentFloor = floor;
+        console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
+        this.updateElevatorPosition();
+        this.playSound(); // Play the sound immediately after updating position
+        setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
+          this.isMoving = false;
+          if (this.queue.length > 0) {
+            const nextFloor = this.queue.shift();
+            if (nextFloor) {
+              this.move(nextFloor);
+            }
+          } else {
+            this.isWaiting = false; // Reset isWaiting flag
+          }
+        }, 2000);
       });
-  } else {
+    } else {
       // If the elevator is already moving, add the floor to the queue
       this.queue.push(floor);
       // Update the flag to indicate that the elevator is waiting for its current movement to finish
       this.isWaiting = true;
+    }
   }
-}
-
 
   // Function to animate the elevator's movement
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
@@ -104,8 +103,6 @@ move(floor: Floor) {
   }
 }
 
-
-
 class ElevatorSystem {
   elevators: Elevator[];
 
@@ -135,11 +132,6 @@ class ElevatorSystem {
   }
 }
 
-
-// Usage example
-const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
-const elevatorSystem = new ElevatorSystem(elevatorElements.map(el => el as HTMLElement));
-
 function requestElevator(floor: Floor) {
   elevatorSystem.requestElevator(floor);
 }
@@ -147,14 +139,11 @@ function requestElevator(floor: Floor) {
 class Building {
   numberOfFloors: number;
   floorButtonsContainer: HTMLElement;
-  timers: HTMLElement[];
-  elevator: Elevator | null;
 
   constructor(numberOfFloors: number, floorButtonsContainer: HTMLElement) {
     this.numberOfFloors = numberOfFloors;
     this.floorButtonsContainer = floorButtonsContainer;
-    this.timers = [];
-    this.elevator = null;
+    this.createFloorButtons();
   }
 
   createFloorButtons() {
@@ -162,23 +151,22 @@ class Building {
       const button = document.createElement('button');
       button.classList.add('floor', 'metal', 'linear');
       button.innerText = i.toString();
-  
+
       button.addEventListener('click', function() {
         requestElevator(new Floor(i));
-      }.bind(this));
-  
+      });
+
       const div = document.createElement('div');
       div.classList.add('blackline');
-  
+
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
       floorDiv.appendChild(button);
-  
+
       this.floorButtonsContainer.appendChild(div);
       this.floorButtonsContainer.appendChild(floorDiv);
     }
   }
-
 }
 
 class BuildingFactory {
@@ -187,13 +175,10 @@ class BuildingFactory {
   }
 }
 
-const floorButtonsContainer = document.getElementById('floorButtonsContainer');
+const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img')) as HTMLElement[];
+const elevatorSystem = new ElevatorSystem(elevatorElements);
+
+const floorButtonsContainer = document.getElementById('floorButtonsContainer')!;
 const buildingFactory = new BuildingFactory();
-
-let elevator: Elevator | null = null;
-
-
 const numberOfFloors = 15;
-const building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer!);
-building.createFloorButtons();
-
+const building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
