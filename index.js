@@ -1,3 +1,4 @@
+"use strict";
 var Floor = /** @class */ (function () {
     function Floor(level) {
         this.level = level;
@@ -90,9 +91,33 @@ var Elevator = /** @class */ (function () {
     return Elevator;
 }());
 var ElevatorSystem = /** @class */ (function () {
-    function ElevatorSystem(elevatorElements) {
-        this.elevators = elevatorElements.map(function (element) { return new Elevator(element); });
+    function ElevatorSystem(containerId, numberOfElevators) {
+        this.containerId = containerId;
+        this.numberOfElevators = numberOfElevators;
+        this.elevators = [];
+        this.createElevators();
     }
+    ElevatorSystem.prototype.createElevators = function () {
+        var elevatorsContainer = document.getElementById(this.containerId);
+        if (elevatorsContainer) {
+            for (var i = 0; i < this.numberOfElevators; i++) {
+                var elevator = new Elevator(document.createElement('div')); // Create a new Elevator instance
+                // Set the initial position of the elevator to the bottom floor
+                elevator.currentFloor = new Floor(0);
+                // Append the elevator container to the elevatorsContainer
+                elevatorsContainer.appendChild(elevator.elevatorElement);
+                // Append an image element to the elevator container for styling
+                var elevatorImage = document.createElement('img');
+                elevatorImage.src = 'elv.png'; // Set the source of the elevator image
+                elevatorImage.alt = 'elevator';
+                elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
+                this.elevators.push(elevator);
+            }
+        }
+        else {
+            console.error("Element with id ".concat(this.containerId, " not found."));
+        }
+    };
     ElevatorSystem.prototype.requestElevator = function (floor) {
         // Find all available elevators
         var availableElevators = this.elevators.filter(function (elevator) { return !elevator.isMoving; });
@@ -154,8 +179,9 @@ var BuildingFactory = /** @class */ (function () {
     return BuildingFactory;
 }());
 var elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
-var elevatorSystem = new ElevatorSystem(elevatorElements);
 var floorButtonsContainer = document.getElementById('floorButtonsContainer');
 var buildingFactory = new BuildingFactory();
 var numberOfFloors = 15;
+var numberOfElevators = 6;
+var elevatorSystem = new ElevatorSystem('elevatorsContainer', numberOfElevators);
 var building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);

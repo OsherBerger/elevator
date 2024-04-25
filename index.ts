@@ -104,10 +104,31 @@ class Elevator {
 }
 
 class ElevatorSystem {
-  elevators: Elevator[];
+  elevators: Elevator[] = [];
 
-  constructor(elevatorElements: HTMLElement[]) {
-    this.elevators = elevatorElements.map(element => new Elevator(element));
+  constructor(private containerId: string, private numberOfElevators: number) {
+    this.createElevators();
+  }
+
+  private createElevators() {
+    const elevatorsContainer = document.getElementById(this.containerId);
+    if (elevatorsContainer) {
+      for (let i = 0; i < this.numberOfElevators; i++) {
+        const elevator = new Elevator(document.createElement('div')); // Create a new Elevator instance
+        // Set the initial position of the elevator to the bottom floor
+        elevator.currentFloor = new Floor(0);
+        // Append the elevator container to the elevatorsContainer
+        elevatorsContainer.appendChild(elevator.elevatorElement); 
+        // Append an image element to the elevator container for styling
+        const elevatorImage = document.createElement('img');
+        elevatorImage.src = 'elv.png'; // Set the source of the elevator image
+        elevatorImage.alt = 'elevator';
+        elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
+        this.elevators.push(elevator);
+      }
+    } else {
+      console.error(`Element with id ${this.containerId} not found.`);
+    }
   }
 
   requestElevator(floor: Floor) {
@@ -131,6 +152,7 @@ class ElevatorSystem {
     }
   }
 }
+
 
 function requestElevator(floor: Floor) {
   elevatorSystem.requestElevator(floor);
@@ -175,10 +197,14 @@ class BuildingFactory {
   }
 }
 
-const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img')) as HTMLElement[];
-const elevatorSystem = new ElevatorSystem(elevatorElements);
 
+
+const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img')) as HTMLElement[];
 const floorButtonsContainer = document.getElementById('floorButtonsContainer')!;
 const buildingFactory = new BuildingFactory();
+
 const numberOfFloors = 15;
+const numberOfElevators = 6;
+
+const elevatorSystem = new ElevatorSystem('elevatorsContainer', numberOfElevators); 
 const building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
