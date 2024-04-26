@@ -1,10 +1,12 @@
 "use strict";
+// Floor class
 var Floor = /** @class */ (function () {
     function Floor(level) {
         this.level = level;
     }
     return Floor;
 }());
+// Elevator class
 var Elevator = /** @class */ (function () {
     function Elevator(element) {
         this.currentFloor = new Floor(0);
@@ -90,32 +92,27 @@ var Elevator = /** @class */ (function () {
     };
     return Elevator;
 }());
+// ElevatorSystem class
 var ElevatorSystem = /** @class */ (function () {
-    function ElevatorSystem(containerId, numberOfElevators) {
-        this.containerId = containerId;
+    function ElevatorSystem(container, numberOfElevators) {
+        this.container = container;
         this.numberOfElevators = numberOfElevators;
         this.elevators = [];
         this.createElevators();
     }
     ElevatorSystem.prototype.createElevators = function () {
-        var elevatorsContainer = document.getElementById(this.containerId);
-        if (elevatorsContainer) {
-            for (var i = 0; i < this.numberOfElevators; i++) {
-                var elevator = new Elevator(document.createElement('div')); // Create a new Elevator instance
-                // Set the initial position of the elevator to the bottom floor
-                elevator.currentFloor = new Floor(0);
-                // Append the elevator container to the elevatorsContainer
-                elevatorsContainer.appendChild(elevator.elevatorElement);
-                // Append an image element to the elevator container for styling
-                var elevatorImage = document.createElement('img');
-                elevatorImage.src = 'elv.png'; // Set the source of the elevator image
-                elevatorImage.alt = 'elevator';
-                elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
-                this.elevators.push(elevator);
-            }
-        }
-        else {
-            console.error("Element with id ".concat(this.containerId, " not found."));
+        for (var i = 0; i < this.numberOfElevators; i++) {
+            var elevator = new Elevator(document.createElement('div')); // Create a new Elevator instance
+            // Set the initial position of the elevator to the bottom floor
+            elevator.currentFloor = new Floor(0);
+            // Append the elevator container to the elevatorsContainer
+            this.container.appendChild(elevator.elevatorElement);
+            // Append an image element to the elevator container for styling
+            var elevatorImage = document.createElement('img');
+            elevatorImage.src = 'elv.png'; // Set the source of the elevator image
+            elevatorImage.alt = 'elevator';
+            elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
+            this.elevators.push(elevator);
         }
     };
     ElevatorSystem.prototype.requestElevator = function (floor) {
@@ -138,50 +135,72 @@ var ElevatorSystem = /** @class */ (function () {
     };
     return ElevatorSystem;
 }());
-function requestElevator(floor) {
-    elevatorSystem.requestElevator(floor);
-}
+// Building class
 var Building = /** @class */ (function () {
-    function Building(numberOfFloors, floorButtonsContainer) {
+    function Building(numberOfFloors, container, numberOfElevators) {
         this.numberOfFloors = numberOfFloors;
-        this.floorButtonsContainer = floorButtonsContainer;
+        this.container = container;
+        this.numberOfElevators = numberOfElevators;
         this.createFloorButtons();
+        this.createElevatorSystem();
     }
     Building.prototype.createFloorButtons = function () {
+        var _this = this;
+        var floorButtonsContainer = document.createElement('div');
+        floorButtonsContainer.classList.add('floorButtonsContainer');
         var _loop_1 = function (i) {
             var button = document.createElement('button');
             button.classList.add('floor', 'metal', 'linear');
             button.innerText = i.toString();
             button.addEventListener('click', function () {
-                requestElevator(new Floor(i));
+                _this.requestElevator(new Floor(i));
             });
             var div = document.createElement('div');
             div.classList.add('blackline');
             var floorDiv = document.createElement('div');
             floorDiv.classList.add('floor');
             floorDiv.appendChild(button);
-            this_1.floorButtonsContainer.appendChild(div);
-            this_1.floorButtonsContainer.appendChild(floorDiv);
+            floorButtonsContainer.appendChild(div);
+            floorButtonsContainer.appendChild(floorDiv);
         };
-        var this_1 = this;
         for (var i = this.numberOfFloors; i >= 0; i--) {
             _loop_1(i);
         }
+        this.container.appendChild(floorButtonsContainer);
+    };
+    Building.prototype.createElevatorSystem = function () {
+        var elevatorsContainer = document.createElement('div');
+        elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
+        this.container.appendChild(elevatorsContainer);
+        this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
+    };
+    Building.prototype.requestElevator = function (floor) {
+        this.elevatorSystem.requestElevator(floor);
     };
     return Building;
 }());
+// BuildingFactory class
 var BuildingFactory = /** @class */ (function () {
     function BuildingFactory() {
     }
-    BuildingFactory.prototype.createBuilding = function (numberOfFloors, floorButtonsContainer) {
-        return new Building(numberOfFloors, floorButtonsContainer);
+    BuildingFactory.prototype.createBuilding = function (numberOfFloors, numberOfElevators, marginLeft) {
+        var _a;
+        var container = document.createElement('div');
+        container.classList.add('building');
+        container.style.marginLeft = "".concat(marginLeft, "px"); // Add margin to the building
+        (_a = document.getElementById('buildingsContainer')) === null || _a === void 0 ? void 0 : _a.appendChild(container);
+        return new Building(numberOfFloors, container, numberOfElevators);
     };
     return BuildingFactory;
 }());
-var elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img'));
-var floorButtonsContainer = document.getElementById('floorButtonsContainer');
+// Create buildings
 var buildingFactory = new BuildingFactory();
 var numberOfFloors = 15;
 var numberOfElevators = 3;
-var elevatorSystem = new ElevatorSystem('elevatorsContainer', numberOfElevators);
-var building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
+var numberOfBuildings = 3;
+var buildingMargin = 250 + (numberOfElevators * 50);
+var marginLeft = 0;
+for (var i = 0; i < numberOfBuildings; i++) {
+    buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
+    marginLeft += buildingMargin; // Adjust the width of the buildings plus margin
+}

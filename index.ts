@@ -1,3 +1,4 @@
+// Floor class
 class Floor {
   level: number;
 
@@ -6,6 +7,7 @@ class Floor {
   }
 }
 
+// Elevator class
 class Elevator {
   currentFloor: Floor;
   isMoving: boolean;
@@ -103,31 +105,27 @@ class Elevator {
   }
 }
 
+// ElevatorSystem class
 class ElevatorSystem {
   elevators: Elevator[] = [];
 
-  constructor(private containerId: string, private numberOfElevators: number) {
+  constructor(private container: HTMLElement, private numberOfElevators: number) {
     this.createElevators();
   }
 
   private createElevators() {
-    const elevatorsContainer = document.getElementById(this.containerId);
-    if (elevatorsContainer) {
-      for (let i = 0; i < this.numberOfElevators; i++) {
-        const elevator = new Elevator(document.createElement('div')); // Create a new Elevator instance
-        // Set the initial position of the elevator to the bottom floor
-        elevator.currentFloor = new Floor(0);
-        // Append the elevator container to the elevatorsContainer
-        elevatorsContainer.appendChild(elevator.elevatorElement); 
-        // Append an image element to the elevator container for styling
-        const elevatorImage = document.createElement('img');
-        elevatorImage.src = 'elv.png'; // Set the source of the elevator image
-        elevatorImage.alt = 'elevator';
-        elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
-        this.elevators.push(elevator);
-      }
-    } else {
-      console.error(`Element with id ${this.containerId} not found.`);
+    for (let i = 0; i < this.numberOfElevators; i++) {
+      const elevator = new Elevator(document.createElement('div')); // Create a new Elevator instance
+      // Set the initial position of the elevator to the bottom floor
+      elevator.currentFloor = new Floor(0);
+      // Append the elevator container to the elevatorsContainer
+      this.container.appendChild(elevator.elevatorElement);
+      // Append an image element to the elevator container for styling
+      const elevatorImage = document.createElement('img');
+      elevatorImage.src = 'elv.png'; // Set the source of the elevator image
+      elevatorImage.alt = 'elevator';
+      elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
+      this.elevators.push(elevator);
     }
   }
 
@@ -153,29 +151,28 @@ class ElevatorSystem {
   }
 }
 
-
-function requestElevator(floor: Floor) {
-  elevatorSystem.requestElevator(floor);
-}
-
+// Building class
 class Building {
-  numberOfFloors: number;
-  floorButtonsContainer: HTMLElement;
 
-  constructor(numberOfFloors: number, floorButtonsContainer: HTMLElement) {
-    this.numberOfFloors = numberOfFloors;
-    this.floorButtonsContainer = floorButtonsContainer;
+  private elevatorSystem!: ElevatorSystem;
+
+
+  constructor(private numberOfFloors: number, private container: HTMLElement, private numberOfElevators: number) {
     this.createFloorButtons();
+    this.createElevatorSystem();
   }
 
-  createFloorButtons() {
+  private createFloorButtons() {
+    const floorButtonsContainer = document.createElement('div');
+    floorButtonsContainer.classList.add('floorButtonsContainer');
+
     for (let i = this.numberOfFloors; i >= 0; i--) {
       const button = document.createElement('button');
       button.classList.add('floor', 'metal', 'linear');
       button.innerText = i.toString();
 
-      button.addEventListener('click', function() {
-        requestElevator(new Floor(i));
+      button.addEventListener('click', () => {
+        this.requestElevator(new Floor(i));
       });
 
       const div = document.createElement('div');
@@ -185,26 +182,49 @@ class Building {
       floorDiv.classList.add('floor');
       floorDiv.appendChild(button);
 
-      this.floorButtonsContainer.appendChild(div);
-      this.floorButtonsContainer.appendChild(floorDiv);
+      floorButtonsContainer.appendChild(div);
+      floorButtonsContainer.appendChild(floorDiv);
     }
+
+    this.container.appendChild(floorButtonsContainer);
+  }
+
+  private createElevatorSystem() {
+    const elevatorsContainer = document.createElement('div');
+    elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
+
+    this.container.appendChild(elevatorsContainer);
+
+    this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
+  }
+
+  private requestElevator(floor: Floor) {
+    this.elevatorSystem.requestElevator(floor);
   }
 }
 
+// BuildingFactory class
 class BuildingFactory {
-  createBuilding(numberOfFloors: number, floorButtonsContainer: HTMLElement) {
-    return new Building(numberOfFloors, floorButtonsContainer);
+  createBuilding(numberOfFloors: number, numberOfElevators: number, marginLeft: number) {
+    const container = document.createElement('div');
+    container.classList.add('building');
+    container.style.marginLeft = `${marginLeft}px`; // Add margin to the building
+    document.getElementById('buildingsContainer')?.appendChild(container);
+
+    return new Building(numberOfFloors, container, numberOfElevators);
   }
 }
 
-
-
-const elevatorElements = Array.prototype.slice.call(document.querySelectorAll('.elevator img')) as HTMLElement[];
-const floorButtonsContainer = document.getElementById('floorButtonsContainer')!;
+// Create buildings
 const buildingFactory = new BuildingFactory();
-
 const numberOfFloors = 15;
 const numberOfElevators = 3;
+const numberOfBuildings = 3;
+const buildingMargin = 250 + (numberOfElevators * 50); 
 
-const elevatorSystem = new ElevatorSystem('elevatorsContainer', numberOfElevators); 
-const building = buildingFactory.createBuilding(numberOfFloors, floorButtonsContainer);
+
+let marginLeft = 0;
+for (let i = 0; i < numberOfBuildings; i++) {
+  buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
+  marginLeft += buildingMargin ; // Adjust the width of the buildings plus margin
+}
