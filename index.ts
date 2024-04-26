@@ -295,7 +295,6 @@ private handleElevatorArrival(floorLevel: number) {
   }
 }
 
-
 // BuildingFactory class
 class BuildingFactory {
   createBuilding(numberOfFloors: number, numberOfElevators: number, marginLeft: number) {
