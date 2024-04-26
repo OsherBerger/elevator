@@ -171,6 +171,7 @@ var Building = /** @class */ (function () {
     Building.prototype.createElevatorSystem = function () {
         var elevatorsContainer = document.createElement('div');
         elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
+        elevatorsContainer.style.width = "".concat(this.numberOfElevators * 50, "px"); // Adjust elevator container width
         this.container.appendChild(elevatorsContainer);
         this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
     };
@@ -187,6 +188,7 @@ var BuildingFactory = /** @class */ (function () {
         var _a;
         var container = document.createElement('div');
         container.classList.add('building');
+        container.style.width = "".concat(numberOfElevators * 50, "px"); // Adjust building width
         container.style.marginLeft = "".concat(marginLeft, "px"); // Add margin to the building
         (_a = document.getElementById('buildingsContainer')) === null || _a === void 0 ? void 0 : _a.appendChild(container);
         return new Building(numberOfFloors, container, numberOfElevators);
@@ -198,7 +200,8 @@ var buildingFactory = new BuildingFactory();
 var numberOfFloors = 15;
 var numberOfElevators = 3;
 var numberOfBuildings = 3;
-var buildingMargin = 250 + (numberOfElevators * 50);
+var buildingWidth = numberOfElevators * 50; // Adjust the width of the buildings
+var buildingMargin = 250 + buildingWidth;
 var marginLeft = 0;
 for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);

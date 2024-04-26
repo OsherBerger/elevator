@@ -192,6 +192,7 @@ class Building {
   private createElevatorSystem() {
     const elevatorsContainer = document.createElement('div');
     elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
+    elevatorsContainer.style.width = `${this.numberOfElevators * 50}px`; // Adjust elevator container width
 
     this.container.appendChild(elevatorsContainer);
 
@@ -208,6 +209,7 @@ class BuildingFactory {
   createBuilding(numberOfFloors: number, numberOfElevators: number, marginLeft: number) {
     const container = document.createElement('div');
     container.classList.add('building');
+    container.style.width = `${numberOfElevators * 50}px`; // Adjust building width
     container.style.marginLeft = `${marginLeft}px`; // Add margin to the building
     document.getElementById('buildingsContainer')?.appendChild(container);
 
@@ -220,7 +222,8 @@ const buildingFactory = new BuildingFactory();
 const numberOfFloors = 15;
 const numberOfElevators = 3;
 const numberOfBuildings = 3;
-const buildingMargin = 250 + (numberOfElevators * 50); 
+const buildingWidth = numberOfElevators * 50; // Adjust the width of the buildings
+const buildingMargin = 250 + buildingWidth; 
 
 
 let marginLeft = 0;
