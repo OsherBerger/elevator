@@ -25,7 +25,7 @@ var Elevator = /** @class */ (function () {
             var targetY = -57 * floor.level;
             // Calculate the distance and duration of the animation
             var distance = Math.abs(targetY - currentY);
-            var animationDuration = distance * 10;
+            var animationDuration = distance * 5;
             // Ensure animationDuration is non-negative
             var duration = Math.max(animationDuration, 0);
             // Animate the elevator's movement
@@ -227,7 +227,7 @@ var Building = /** @class */ (function () {
             var elevator = this.elevatorSystem.elevators[0]; // Assuming there's only one elevator in the system
             var currentFloor = elevator.currentFloor; // Get the current floor of the elevator
             var distance = Math.abs(targetFloor.level - currentFloor.level); // Calculate the distance between floors
-            var etaSeconds = distance * 0.5; // Assume the elevator takes 5 seconds to travel one floor
+            var etaSeconds = distance * 0.5; // Assume the elevator takes 0.5 seconds to travel one floor
             var seconds_1 = etaSeconds; // Start the timer from the estimated time to arrival
             timer.innerText = "".concat(seconds_1); // Update the initial timer text
             var interval_1 = setInterval(function () {
@@ -240,7 +240,7 @@ var Building = /** @class */ (function () {
                     timer.remove(); // Remove the timer element
                     button.style.color = '';
                 }
-            }, 1000); // Update every second
+            }, 500); // Update every half second
         }
     };
     return Building;

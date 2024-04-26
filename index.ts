@@ -33,7 +33,7 @@ class Elevator {
 
       // Calculate the distance and duration of the animation
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 10;
+      const animationDuration = distance * 5;
 
       // Ensure animationDuration is non-negative
       const duration = Math.max(animationDuration, 0);
@@ -200,6 +200,7 @@ class Building {
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
       floorDiv.appendChild(button);
+      
 
       floorButtonsContainer.appendChild(div);
       floorButtonsContainer.appendChild(floorDiv);
@@ -259,7 +260,7 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
     const elevator = this.elevatorSystem.elevators[0]; // Assuming there's only one elevator in the system
     const currentFloor = elevator.currentFloor; // Get the current floor of the elevator
     const distance = Math.abs(targetFloor.level - currentFloor.level); // Calculate the distance between floors
-    const etaSeconds = distance * 0.5; // Assume the elevator takes 5 seconds to travel one floor
+    const etaSeconds = distance * 0.5; // Assume the elevator takes 0.5 seconds to travel one floor
     let seconds = etaSeconds; // Start the timer from the estimated time to arrival
     timer.innerText = `${seconds}`; // Update the initial timer text
 
@@ -273,7 +274,7 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
         button.style.color = '';
 
       }
-    }, 1000); // Update every second
+    }, 500); // Update every half second
   }
 }
 

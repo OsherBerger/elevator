@@ -17,6 +17,13 @@
   height: 45px;
 }
 
+/* CSS */
+.timer {
+  margin-left: 50px;
+  transform: translateY(-100%);
+}
+
+
 .floor {
   background-color: silver;
   width: 200px;
