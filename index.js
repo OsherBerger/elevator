@@ -220,27 +220,40 @@ var Building = /** @class */ (function () {
             }
         });
     };
-    // Method to update the timer on the button
     Building.prototype.updateTimer = function (targetFloor, button) {
         var timer = button.querySelector('.timer');
         if (timer) {
-            var elevator = this.elevatorSystem.elevators[0]; // Assuming there's only one elevator in the system
-            var currentFloor = elevator.currentFloor; // Get the current floor of the elevator
-            var distance = Math.abs(targetFloor.level - currentFloor.level); // Calculate the distance between floors
-            var etaSeconds = distance * 0.5; // Assume the elevator takes 0.5 seconds to travel one floor
-            var seconds_1 = etaSeconds; // Start the timer from the estimated time to arrival
-            timer.innerText = "".concat(seconds_1); // Update the initial timer text
-            var interval_1 = setInterval(function () {
-                seconds_1--; // Decrement the timer
-                if (seconds_1 >= 0) {
-                    timer.innerText = "".concat(seconds_1, " "); // Update the timer text every second
+            var closestElevator_1 = null;
+            var minDistance_1 = Infinity;
+            // Ensure elevatorSystem.elevators only contains Elevator instances
+            var elevators = this.elevatorSystem.elevators.filter(function (elevator) { return elevator instanceof Elevator; });
+            // Find the closest elevator to the target floor
+            elevators.forEach(function (elevator) {
+                var distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
+                if (distance < minDistance_1) {
+                    minDistance_1 = distance;
+                    closestElevator_1 = elevator;
                 }
-                else {
-                    clearInterval(interval_1); // Stop the timer when it reaches zero
-                    timer.remove(); // Remove the timer element
-                    button.style.color = '';
-                }
-            }, 500); // Update every half second
+            });
+            if (closestElevator_1) {
+                // Use type assertion to ensure TypeScript recognizes closestElevator as an Elevator instance
+                var currentFloor = closestElevator_1.currentFloor;
+                var distance = Math.abs(targetFloor.level - currentFloor.level);
+                var etaSeconds = distance * 0.5; // Assuming 0.5 seconds per floor
+                var seconds_1 = etaSeconds;
+                timer.innerText = "".concat(seconds_1);
+                var interval_1 = setInterval(function () {
+                    seconds_1--;
+                    if (seconds_1 >= 0) {
+                        timer.innerText = "".concat(seconds_1);
+                    }
+                    else {
+                        clearInterval(interval_1);
+                        timer.remove();
+                        button.style.color = '';
+                    }
+                }, 500);
+            }
         }
     };
     return Building;

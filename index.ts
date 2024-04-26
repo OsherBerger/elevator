@@ -253,30 +253,48 @@ private handleElevatorArrival(floorLevel: number) {
   });
 }
 
-// Method to update the timer on the button
+
 private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
   const timer = button.querySelector('.timer') as HTMLDivElement;
   if (timer) {
-    const elevator = this.elevatorSystem.elevators[0]; // Assuming there's only one elevator in the system
-    const currentFloor = elevator.currentFloor; // Get the current floor of the elevator
-    const distance = Math.abs(targetFloor.level - currentFloor.level); // Calculate the distance between floors
-    const etaSeconds = distance * 0.5; // Assume the elevator takes 0.5 seconds to travel one floor
-    let seconds = etaSeconds; // Start the timer from the estimated time to arrival
-    timer.innerText = `${seconds}`; // Update the initial timer text
+    let closestElevator: Elevator | null = null;
+    let minDistance = Infinity;
 
-    const interval = setInterval(() => {
-      seconds--; // Decrement the timer
-      if (seconds >= 0) {
-        timer.innerText = `${seconds} `; // Update the timer text every second
-      } else {
-        clearInterval(interval); // Stop the timer when it reaches zero
-        timer.remove(); // Remove the timer element
-        button.style.color = '';
+    // Ensure elevatorSystem.elevators only contains Elevator instances
+    const elevators: Elevator[] = this.elevatorSystem.elevators.filter(elevator => elevator instanceof Elevator);
 
+    // Find the closest elevator to the target floor
+    elevators.forEach((elevator: Elevator) => {
+      const distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestElevator = elevator;
       }
-    }, 500); // Update every half second
+    });
+
+    if (closestElevator) {
+      // Use type assertion to ensure TypeScript recognizes closestElevator as an Elevator instance
+      const currentFloor = (closestElevator as Elevator).currentFloor;
+      const distance = Math.abs(targetFloor.level - currentFloor.level);
+      const etaSeconds = distance * 0.5; // Assuming 0.5 seconds per floor
+
+      let seconds = etaSeconds;
+      timer.innerText = `${seconds}`;
+
+      const interval = setInterval(() => {
+        seconds--;
+        if (seconds >= 0) {
+          timer.innerText = `${seconds}`;
+        } else {
+          clearInterval(interval);
+          timer.remove();
+          button.style.color = '';
+        }
+      }, 500);
+    }
   }
 }
+
 
 
 
