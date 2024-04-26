@@ -33,7 +33,7 @@ class Elevator {
 
       // Calculate the distance and duration of the animation
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 8;
+      const animationDuration = distance * 9;
 
       // Ensure animationDuration is non-negative
       const duration = Math.max(animationDuration, 0);
@@ -185,6 +185,11 @@ class Building {
       button.classList.add('floor', 'metal', 'linear');
       button.innerText = i.toString();
 
+      const timer = document.createElement('div');
+      timer.classList.add('timer');
+      button.appendChild(timer); // Append the timer element to the button
+
+
       button.addEventListener('click', () => {
         this.requestElevator(new Floor(i),button);
       });
@@ -218,6 +223,9 @@ class Building {
 
     // Change the color of the button text to green
     button.style.color = 'green';
+
+      // Start the timer for this floor button
+  this.updateTimer(floor, button);
   }
   // Method to setup the elevator arrival listener
   private setupElevatorArrivalListener() {
@@ -235,11 +243,41 @@ private handleElevatorArrival(floorLevel: number) {
   // Iterate over each button and find the one with the matching text content
   buttons.forEach((button) => {
     if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
+      // Remove the timer element
+      const timer = button.querySelector('.timer');
       // Reset the color of the found button
       (button as HTMLButtonElement).style.color = '';
+      if (timer) {
+        timer.remove();
+      }
     }
   });
 }
+
+// Method to update the timer on the button
+private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
+  const timer = button.querySelector('.timer') as HTMLDivElement;
+  if (timer) {
+    const elevator = this.elevatorSystem.elevators[0]; // Assuming there's only one elevator in the system
+    const currentFloor = elevator.currentFloor; // Get the current floor of the elevator
+    const distance = Math.abs(targetFloor.level - currentFloor.level); // Calculate the distance between floors
+    const etaSeconds = distance * 0.5; // Assume the elevator takes 5 seconds to travel one floor
+    let seconds = etaSeconds; // Start the timer from the estimated time to arrival
+    timer.innerText = `${seconds}`; // Update the initial timer text
+
+    const interval = setInterval(() => {
+      seconds--; // Decrement the timer
+      if (seconds >= 0) {
+        timer.innerText = `${seconds} `; // Update the timer text every second
+      } else {
+        clearInterval(interval); // Stop the timer when it reaches zero
+        timer.remove(); // Remove the timer element
+      }
+    }, 1000); // Update every second
+  }
+}
+
+
 
 }
 
