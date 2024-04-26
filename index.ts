@@ -33,7 +33,7 @@ class Elevator {
 
       // Calculate the distance and duration of the animation
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 9;
+      const animationDuration = distance * 10;
 
       // Ensure animationDuration is non-negative
       const duration = Math.max(animationDuration, 0);
@@ -245,8 +245,6 @@ private handleElevatorArrival(floorLevel: number) {
     if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
       // Remove the timer element
       const timer = button.querySelector('.timer');
-      // Reset the color of the found button
-      (button as HTMLButtonElement).style.color = '';
       if (timer) {
         timer.remove();
       }
@@ -272,6 +270,8 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
       } else {
         clearInterval(interval); // Stop the timer when it reaches zero
         timer.remove(); // Remove the timer element
+        button.style.color = '';
+
       }
     }, 1000); // Update every second
   }

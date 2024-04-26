@@ -25,7 +25,7 @@ var Elevator = /** @class */ (function () {
             var targetY = -57 * floor.level;
             // Calculate the distance and duration of the animation
             var distance = Math.abs(targetY - currentY);
-            var animationDuration = distance * 9;
+            var animationDuration = distance * 10;
             // Ensure animationDuration is non-negative
             var duration = Math.max(animationDuration, 0);
             // Animate the elevator's movement
@@ -214,8 +214,6 @@ var Building = /** @class */ (function () {
             if (button.innerText === floorLevel.toString()) {
                 // Remove the timer element
                 var timer = button.querySelector('.timer');
-                // Reset the color of the found button
-                button.style.color = '';
                 if (timer) {
                     timer.remove();
                 }
@@ -240,6 +238,7 @@ var Building = /** @class */ (function () {
                 else {
                     clearInterval(interval_1); // Stop the timer when it reaches zero
                     timer.remove(); // Remove the timer element
+                    button.style.color = '';
                 }
             }, 1000); // Update every second
         }
