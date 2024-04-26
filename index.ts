@@ -226,9 +226,8 @@ class BuildingFactory {
 const buildingFactory = new BuildingFactory();
 const numberOfFloors = 15;
 const numberOfElevators = 3;
-const numberOfBuildings = 3;
-const buildingWidth = numberOfElevators * 50; // Adjust the width of the buildings
-const buildingMargin = 80 + buildingWidth; 
+const numberOfBuildings = 2;
+const buildingMargin = 80 + (numberOfElevators * 50); 
 
 
 let marginLeft = 0;

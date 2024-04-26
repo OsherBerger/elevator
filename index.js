@@ -203,9 +203,8 @@ var BuildingFactory = /** @class */ (function () {
 var buildingFactory = new BuildingFactory();
 var numberOfFloors = 15;
 var numberOfElevators = 3;
-var numberOfBuildings = 3;
-var buildingWidth = numberOfElevators * 50; // Adjust the width of the buildings
-var buildingMargin = 80 + buildingWidth;
+var numberOfBuildings = 2;
+var buildingMargin = 80 + (numberOfElevators * 50);
 var marginLeft = 0;
 for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
