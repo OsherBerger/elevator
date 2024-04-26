@@ -1,83 +1,40 @@
-Only if you click on a floor button, then elevator moves, to that direction.
+**Project Architecture Overview**
 
-If we click on one of the floor buttons, after we already clicked once, we need to calculate which elevator is the closest by absolute value , and this is the elevator that would need to go to that floor.
+The Elevator System project aims to simulate an elevator system within a building.
+The system is designed to handle multiple elevators and floors dynamically.
+Here's an overview of the project architecture:
 
-If there are more than one elevator in the same distance, we would pick one randomly.
+1. **HTML Structure**: 
+The project's HTML file (`index.html`) contains the basic structure of the web page.
+ It includes a container (`buildingsContainer`) where the buildings with elevators and floor buttons will be dynamically generated.
+The HTML also includes links to the CSS and JavaScript files.
 
-Clicking on a button would call an elevator to the floor' even if at the moment, there isn't one free to go there.
+2. **CSS Styling**:
+The CSS file (`index.css`) contains styles for various elements used in the project. 
+It defines the appearance of floor buttons, elevator buttons, and elevator cabins. 
+Additionally, it includes animations for elevator movement and button interactions.
 
-The elevators would move at speed of 0.5 second per floor. when they arrive they wait there for 2 seconds.
+3. **TypeScript/JavaScript Logic**:
+ The JavaScript file (`index.js`) contains the core logic of the elevator system. 
+ It defines several classes:
 
-The animation should be displayed smoothly- and not jumping between floors.
+   - **Floor Class**: Represents a floor in the building.
+    It stores the level number of the floor.
+   
+   - **Elevator Class**: Represents an elevator in the system. 
+   It tracks the current floor, movement status, queue of requested floors, and handles elevator movement animations.
+   
+   - **ElevatorSystem Class**: Manages multiple elevators within the building. 
+   It handles requests for elevator service, assigns available elevators to requested floors, and manages elevator queues.
+   
+   - **Building Class**: Represents a building with multiple floors and elevators. 
+   It creates floor buttons and elevator systems within the building, handles elevator arrival events, and updates button colors and timers.
+   
+   - **BuildingFactory Class**: Generates multiple buildings with specified numbers of floors and elevators. 
+   It creates building instances and sets their initial configurations.
 
-after inviting elevator to a floor there would be a timer display that would show the expected time until the elevator comes.
+4. **Project Initialization**: The script initializes the project by creating buildings with a specified number of floors and elevators. 
+It calculates the necessary margins for arranging the buildings horizontally on the page.
 
-the elevator alg' should bring to the lowest waiting time possible, without increasing the waiting time for those who already invited the elevator
-
-@startuml
-
-class Building {
-    -floors: number
-    -elevators: Elevator[]
-    -floorObjects: Floor[]
-    +constructor(floors: number, elevators: number)
-    +addElevator(elevator: Elevator): void
-    +getFloorCount(): number
-    +getElevatorCount(): number
-    +getElevator(index: number): Elevator
-    +getFloorObject(floorNumber: number): Floor
-    +initializeBuildingUI(): void
-    +updateElevatorUI(elevatorIndex: number): void
-    +requestElevator(floor: number): void
-}
-
-class Elevator {
-    -currentFloor: Floor
-    -destinationFloor: Floor
-    -isMoving: boolean
-    -isAvailable: boolean
-    -timer: Timer
-    -doorOpen: boolean
-    -requestedFloors: Floor[]
-    +moveTo(floor: Floor): void
-    +isAvailable(): boolean
-    +request(floor: Floor): void
-    +stop(): void
-    +tick(): void
-    +setTimer(timer: Timer): void
-    +openDoor(): void
-    +closeDoor(): void
-    +addRequestedFloor(floor: Floor): void
-    +clearRequestedFloors(): void
-    +isDoorOpen(): boolean
-}
-
-class Floor {
-    -number: number
-    +constructor(number: number)
-    +getNumber(): number
-}
-
-class Timer {
-    -remainingTime: number
-    +constructor()
-    +startTimer(duration: number): void
-    +stopTimer(): void
-    +getRemainingTime(): number
-}
-
-Building "1" *-- "*" Elevator : contains
-Building "1" *-- "*" Floor : has
-Elevator "1" -- "1" Timer : uses
-Elevator "1" -- "*" Floor : has requested
-Elevator "1" -- "0..1" Floor : current floor
-Floor "1" *-- "*" Elevator : has elevator
-
-@enduml
-
-Here's a basic algorithm we can use:
-
-When a floor request is made, calculate the distance between each elevator and the requested floor.
-Assign the request to the elevator with the shortest distance to the floor.
-If an elevator is moving and has a queue, calculate the distance between the last floor in its queue and the requested floor. If the distance is shorter than the current closest distance for any other elevator, assign the request to that elevator instead.
-If all elevators are idle, assign the request to the closest elevator.
+Overall, the project architecture follows a modular and object-oriented approach to simulate a functional elevator system within a building environment. 
+It dynamically handles user interactions with floor buttons and updates elevator movement and status in real-time.
