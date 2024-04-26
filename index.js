@@ -151,7 +151,6 @@ var Building = /** @class */ (function () {
         this.numberOfFloors = numberOfFloors;
         this.container = container;
         this.numberOfElevators = numberOfElevators;
-        this.buttonColorTimeouts = new Map();
         this.createFloorButtons();
         this.createElevatorSystem();
         this.setupElevatorArrivalListener();
@@ -288,3 +287,5 @@ for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
     marginLeft = buildingMargin; // Adjust the width of the buildings plus margin
 }
+//ToDo: Improve the Elevator algorithm and update the timer accordingly
+//Todo: Improve way to build floors so no problem would appear at any number of floors

@@ -167,7 +167,6 @@ class ElevatorSystem {
 class Building {
 
   private elevatorSystem!: ElevatorSystem;
-  private buttonColorTimeouts: Map<number, number> = new Map();
 
 
   constructor(private numberOfFloors: number, private container: HTMLElement, private numberOfElevators: number) {
@@ -254,50 +253,46 @@ private handleElevatorArrival(floorLevel: number) {
 }
 
 
-private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
-  const timer = button.querySelector('.timer') as HTMLDivElement;
-  if (timer) {
-    let closestElevator: Elevator | null = null;
-    let minDistance = Infinity;
+  private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
+    const timer = button.querySelector('.timer') as HTMLDivElement;
+    if (timer) {
+      let closestElevator: Elevator | null = null;
+      let minDistance = Infinity;
 
-    // Ensure elevatorSystem.elevators only contains Elevator instances
-    const elevators: Elevator[] = this.elevatorSystem.elevators.filter(elevator => elevator instanceof Elevator);
+      // Ensure elevatorSystem.elevators only contains Elevator instances
+      const elevators: Elevator[] = this.elevatorSystem.elevators.filter(elevator => elevator instanceof Elevator);
 
-    // Find the closest elevator to the target floor
-    elevators.forEach((elevator: Elevator) => {
-      const distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestElevator = elevator;
-      }
-    });
-
-    if (closestElevator) {
-      // Use type assertion to ensure TypeScript recognizes closestElevator as an Elevator instance
-      const currentFloor = (closestElevator as Elevator).currentFloor;
-      const distance = Math.abs(targetFloor.level - currentFloor.level);
-      const etaSeconds = distance * 0.5; // Assuming 0.5 seconds per floor
-
-      let seconds = etaSeconds;
-      timer.innerText = `${seconds}`;
-
-      const interval = setInterval(() => {
-        seconds--;
-        if (seconds >= 0) {
-          timer.innerText = `${seconds}`;
-        } else {
-          clearInterval(interval);
-          timer.remove();
-          button.style.color = '';
+      // Find the closest elevator to the target floor
+      elevators.forEach((elevator: Elevator) => {
+        const distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestElevator = elevator;
         }
-      }, 500);
+      });
+
+      if (closestElevator) {
+        // Use type assertion to ensure TypeScript recognizes closestElevator as an Elevator instance
+        const currentFloor = (closestElevator as Elevator).currentFloor;
+        const distance = Math.abs(targetFloor.level - currentFloor.level);
+        const etaSeconds = distance * 0.5; // Assuming 0.5 seconds per floor
+
+        let seconds = etaSeconds;
+        timer.innerText = `${seconds}`;
+
+        const interval = setInterval(() => {
+          seconds--;
+          if (seconds >= 0) {
+            timer.innerText = `${seconds}`;
+          } else {
+            clearInterval(interval);
+            timer.remove();
+            button.style.color = '';
+          }
+        }, 500);
+      }
     }
   }
-}
-
-
-
-
 }
 
 
@@ -332,3 +327,6 @@ for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
   marginLeft = buildingMargin ; // Adjust the width of the buildings plus margin
 }
+
+//ToDo: Improve the Elevator algorithm and update the timer accordingly
+//Todo: Improve way to build floors so no problem would appear at any number of floors
