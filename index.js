@@ -191,6 +191,10 @@ var BuildingFactory = /** @class */ (function () {
         container.style.width = "".concat(numberOfElevators * 50, "px"); // Adjust building width
         container.style.marginLeft = "".concat(marginLeft, "px"); // Add margin to the building
         (_a = document.getElementById('buildingsContainer')) === null || _a === void 0 ? void 0 : _a.appendChild(container);
+        var buildingsContainer = document.getElementById('buildingsContainer');
+        if (buildingsContainer) {
+            buildingsContainer.style.display = 'flex';
+        }
         return new Building(numberOfFloors, container, numberOfElevators);
     };
     return BuildingFactory;
@@ -201,9 +205,9 @@ var numberOfFloors = 15;
 var numberOfElevators = 3;
 var numberOfBuildings = 3;
 var buildingWidth = numberOfElevators * 50; // Adjust the width of the buildings
-var buildingMargin = 250 + buildingWidth;
+var buildingMargin = 80 + buildingWidth;
 var marginLeft = 0;
 for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
-    marginLeft += buildingMargin; // Adjust the width of the buildings plus margin
+    marginLeft = buildingMargin; // Adjust the width of the buildings plus margin
 }

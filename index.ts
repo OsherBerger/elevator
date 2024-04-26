@@ -213,6 +213,11 @@ class BuildingFactory {
     container.style.marginLeft = `${marginLeft}px`; // Add margin to the building
     document.getElementById('buildingsContainer')?.appendChild(container);
 
+    const buildingsContainer = document.getElementById('buildingsContainer');
+    if (buildingsContainer) {
+      buildingsContainer.style.display = 'flex';
+    }
+
     return new Building(numberOfFloors, container, numberOfElevators);
   }
 }
@@ -223,11 +228,11 @@ const numberOfFloors = 15;
 const numberOfElevators = 3;
 const numberOfBuildings = 3;
 const buildingWidth = numberOfElevators * 50; // Adjust the width of the buildings
-const buildingMargin = 250 + buildingWidth; 
+const buildingMargin = 80 + buildingWidth; 
 
 
 let marginLeft = 0;
 for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
-  marginLeft += buildingMargin ; // Adjust the width of the buildings plus margin
+  marginLeft = buildingMargin ; // Adjust the width of the buildings plus margin
 }

@@ -8,8 +8,8 @@
   position: absolute;
   bottom: 0;
   display: flex;
-  flex-direction: row; 
   margin-left: 205px;
+  /* margin-bottom: 10px; if full screen, this change is needed*/
 }
 
 .elevator img {
