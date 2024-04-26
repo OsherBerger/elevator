@@ -33,6 +33,7 @@ var Elevator = /** @class */ (function () {
                 _this.currentFloor = floor;
                 console.log("Elevator arrived at floor ".concat(_this.currentFloor.level));
                 _this.updateElevatorPosition();
+                _this.dispatchArrivalEvent(); // Dispatch the arrival event
                 _this.playSound(); // Play the sound immediately after updating position
                 setTimeout(function () {
                     _this.isMoving = false;
@@ -90,6 +91,15 @@ var Elevator = /** @class */ (function () {
         var translateY = "calc(".concat(this.currentFloor.level, " * -57px)");
         this.elevatorElement.style.transform = "translateY(".concat(translateY, ")");
     };
+    // Method to dispatch the elevator arrival event
+    Elevator.prototype.dispatchArrivalEvent = function () {
+        var arrivalEvent = new CustomEvent('elevatorArrival', {
+            detail: {
+                floorLevel: this.currentFloor.level
+            }
+        });
+        document.dispatchEvent(arrivalEvent);
+    };
     return Elevator;
 }());
 // ElevatorSystem class
@@ -141,8 +151,10 @@ var Building = /** @class */ (function () {
         this.numberOfFloors = numberOfFloors;
         this.container = container;
         this.numberOfElevators = numberOfElevators;
+        this.buttonColorTimeouts = new Map();
         this.createFloorButtons();
         this.createElevatorSystem();
+        this.setupElevatorArrivalListener();
     }
     Building.prototype.createFloorButtons = function () {
         var _this = this;
@@ -153,7 +165,7 @@ var Building = /** @class */ (function () {
             button.classList.add('floor', 'metal', 'linear');
             button.innerText = i.toString();
             button.addEventListener('click', function () {
-                _this.requestElevator(new Floor(i));
+                _this.requestElevator(new Floor(i), button);
             });
             var div = document.createElement('div');
             div.classList.add('blackline');
@@ -175,8 +187,30 @@ var Building = /** @class */ (function () {
         this.container.appendChild(elevatorsContainer);
         this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
     };
-    Building.prototype.requestElevator = function (floor) {
+    Building.prototype.requestElevator = function (floor, button) {
         this.elevatorSystem.requestElevator(floor);
+        // Change the color of the button text to green
+        button.style.color = 'green';
+    };
+    // Method to setup the elevator arrival listener
+    Building.prototype.setupElevatorArrivalListener = function () {
+        var _this = this;
+        document.addEventListener('elevatorArrival', function (event) {
+            var floorLevel = event.detail.floorLevel;
+            _this.handleElevatorArrival(floorLevel);
+        });
+    };
+    // Method to handle the elevator arrival and reset button color
+    Building.prototype.handleElevatorArrival = function (floorLevel) {
+        // Get all buttons within the floorButtonsContainer
+        var buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
+        // Iterate over each button and find the one with the matching text content
+        buttons.forEach(function (button) {
+            if (button.innerText === floorLevel.toString()) {
+                // Reset the color of the found button
+                button.style.color = '';
+            }
+        });
     };
     return Building;
 }());

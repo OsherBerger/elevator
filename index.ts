@@ -43,6 +43,7 @@ class Elevator {
         this.currentFloor = floor;
         console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
         this.updateElevatorPosition();
+        this.dispatchArrivalEvent(); // Dispatch the arrival event
         this.playSound(); // Play the sound immediately after updating position
         setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
           this.isMoving = false;
@@ -103,6 +104,17 @@ class Elevator {
     const translateY = `calc(${this.currentFloor.level} * -57px)`;
     this.elevatorElement.style.transform = `translateY(${translateY})`;
   }
+
+  // Method to dispatch the elevator arrival event
+  private dispatchArrivalEvent() {
+    const arrivalEvent = new CustomEvent('elevatorArrival', {
+      detail: {
+        floorLevel: this.currentFloor.level
+      }
+    });
+    document.dispatchEvent(arrivalEvent);
+  }
+
 }
 
 // ElevatorSystem class
@@ -155,11 +167,13 @@ class ElevatorSystem {
 class Building {
 
   private elevatorSystem!: ElevatorSystem;
+  private buttonColorTimeouts: Map<number, number> = new Map();
 
 
   constructor(private numberOfFloors: number, private container: HTMLElement, private numberOfElevators: number) {
     this.createFloorButtons();
     this.createElevatorSystem();
+    this.setupElevatorArrivalListener();
   }
 
   private createFloorButtons() {
@@ -172,7 +186,7 @@ class Building {
       button.innerText = i.toString();
 
       button.addEventListener('click', () => {
-        this.requestElevator(new Floor(i));
+        this.requestElevator(new Floor(i),button);
       });
 
       const div = document.createElement('div');
@@ -199,10 +213,36 @@ class Building {
     this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
   }
 
-  private requestElevator(floor: Floor) {
+  private requestElevator(floor: Floor, button: HTMLButtonElement) {
     this.elevatorSystem.requestElevator(floor);
+
+    // Change the color of the button text to green
+    button.style.color = 'green';
   }
+  // Method to setup the elevator arrival listener
+  private setupElevatorArrivalListener() {
+    document.addEventListener('elevatorArrival', (event) => {
+      const floorLevel = (event as CustomEvent).detail.floorLevel;
+      this.handleElevatorArrival(floorLevel);
+    });
+  }
+
+// Method to handle the elevator arrival and reset button color
+private handleElevatorArrival(floorLevel: number) {
+  // Get all buttons within the floorButtonsContainer
+  const buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
+
+  // Iterate over each button and find the one with the matching text content
+  buttons.forEach((button) => {
+    if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
+      // Reset the color of the found button
+      (button as HTMLButtonElement).style.color = '';
+    }
+  });
 }
+
+}
+
 
 // BuildingFactory class
 class BuildingFactory {
