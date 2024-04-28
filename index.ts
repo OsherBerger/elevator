@@ -178,35 +178,40 @@ class Building {
   private createFloorButtons() {
     const floorButtonsContainer = document.createElement('div');
     floorButtonsContainer.classList.add('floorButtonsContainer');
-
+  
     // Loop from the ground floor (level 0) to the top floor
     for (let i = 0; i <= this.numberOfFloors; i++) {
       const button = document.createElement('button');
       button.classList.add('floor', 'metal', 'linear');
       button.innerText = i.toString();
-
+  
       const timer = document.createElement('div');
       timer.classList.add('timer');
       button.appendChild(timer); // Append the timer element to the button
-
+  
       button.addEventListener('click', () => {
         this.requestElevator(new Floor(i), button);
       });
-
+  
       const div = document.createElement('div');
       div.classList.add('blackline');
-
+  
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
       floorDiv.appendChild(button);
-
+  
       floorButtonsContainer.appendChild(floorDiv);
       floorButtonsContainer.appendChild(div);
     }
-
-    this.container.appendChild(floorButtonsContainer);
-}
-
+  
+    // Wrap the floor buttons container in a scrollable container
+    const scrollContainer = document.createElement('div');
+    scrollContainer.classList.add('scrollContainer');
+    scrollContainer.appendChild(floorButtonsContainer);
+  
+    this.container.appendChild(scrollContainer);
+  }
+  
 
   private createElevatorSystem() {
     const elevatorsContainer = document.createElement('div');
@@ -315,7 +320,7 @@ class BuildingFactory {
 
 // Create buildings
 const buildingFactory = new BuildingFactory();
-const numberOfFloors = 5;
+const numberOfFloors = 9;
 const numberOfElevators = 3;
 const numberOfBuildings = 2;
 const buildingMargin = 80 + (numberOfElevators * 50); 
@@ -324,7 +329,7 @@ const buildingMargin = 80 + (numberOfElevators * 50);
 let marginLeft = 0;
 for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
-  marginLeft = buildingMargin ; // Adjust the width of the buildings plus margin
+  marginLeft = buildingMargin ; 
 }
 
 //ToDo: Improve the Elevator algorithm and update the timer accordingly

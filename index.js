@@ -181,7 +181,11 @@ var Building = /** @class */ (function () {
         for (var i = 0; i <= this.numberOfFloors; i++) {
             _loop_1(i);
         }
-        this.container.appendChild(floorButtonsContainer);
+        // Wrap the floor buttons container in a scrollable container
+        var scrollContainer = document.createElement('div');
+        scrollContainer.classList.add('scrollContainer');
+        scrollContainer.appendChild(floorButtonsContainer);
+        this.container.appendChild(scrollContainer);
     };
     Building.prototype.createElevatorSystem = function () {
         var elevatorsContainer = document.createElement('div');
@@ -279,14 +283,14 @@ var BuildingFactory = /** @class */ (function () {
 }());
 // Create buildings
 var buildingFactory = new BuildingFactory();
-var numberOfFloors = 5;
+var numberOfFloors = 9;
 var numberOfElevators = 3;
 var numberOfBuildings = 2;
 var buildingMargin = 80 + (numberOfElevators * 50);
 var marginLeft = 0;
 for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
-    marginLeft = buildingMargin; // Adjust the width of the buildings plus margin
+    marginLeft = buildingMargin;
 }
 //ToDo: Improve the Elevator algorithm and update the timer accordingly
 //Todo: Improve way to build floors so no problem would appear at any number of floors

@@ -24,6 +24,12 @@
   transform: translateY(-100%);
 }
 
+.scrollContainer {
+  /* overflow-y: auto;  */
+  /* max-height: 100vh; */
+  /* max-width: 200vh; */
+}
+
 .floorButtonsContainer {
   position: absolute;
   bottom: 0;
@@ -31,7 +37,8 @@
   flex-direction: column-reverse; /* Start from the bottom */
 }
 .building {
-  margin-left: 80px; /* Adjust as needed */
+  /* min-width: 50%;  */
+  /* min-height: 100%; */
 }
 
 
