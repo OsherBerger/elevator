@@ -26,8 +26,6 @@
 
 .scrollContainer {
   /* overflow-y: auto;  */
-  /* max-height: 100vh; */
-  /* max-width: 200vh; */
 }
 
 .floorButtonsContainer {
@@ -36,11 +34,6 @@
   display: flex;
   flex-direction: column-reverse; /* Start from the bottom */
 }
-.building {
-  /* min-width: 50%;  */
-  /* min-height: 100%; */
-}
-
 
 .floor {
   background-color: silver;
