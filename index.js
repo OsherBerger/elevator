@@ -279,11 +279,11 @@ var BuildingFactory = /** @class */ (function () {
 }());
 // Create buildings
 var buildingFactory = new BuildingFactory();
-var numberOfFloors = 19;
-var numberOfElevators = 6;
-var numberOfBuildings = 4;
+var numberOfFloors = 15;
+var numberOfElevators = 3;
+var numberOfBuildings = 3;
 for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
 //ToDo: Improve the Elevator algorithm and update the timer accordingly
-//Todo: Improve way to build floors so no problem would appear at any number of floors
+//Todo: Improve way to build floors so no problem would appear at any number of floors(Full screen in zoom out to 25%(maxed out) can only get to 75 floors with no scrolling option)

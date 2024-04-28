@@ -315,13 +315,13 @@ class BuildingFactory {
 
 // Create buildings
 const buildingFactory = new BuildingFactory();
-const numberOfFloors = 19;
-const numberOfElevators = 6;
-const numberOfBuildings = 4;
+const numberOfFloors = 15;
+const numberOfElevators = 3;
+const numberOfBuildings = 3;
 
 for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
 
 //ToDo: Improve the Elevator algorithm and update the timer accordingly
-//Todo: Improve way to build floors so no problem would appear at any number of floors
+//Todo: Improve way to build floors so no problem would appear at any number of floors(Full screen in zoom out to 25%(maxed out) can only get to 75 floors with no scrolling option)

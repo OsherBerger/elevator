@@ -25,7 +25,8 @@
 }
 
 .scrollContainer {
-  /* overflow-y: auto;  */
+    height: auto;
+    overflow-y: scroll;
 }
 
 .floorButtonsContainer {
