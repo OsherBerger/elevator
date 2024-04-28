@@ -266,31 +266,24 @@ var Building = /** @class */ (function () {
 var BuildingFactory = /** @class */ (function () {
     function BuildingFactory() {
     }
-    BuildingFactory.prototype.createBuilding = function (numberOfFloors, numberOfElevators, marginLeft) {
+    BuildingFactory.prototype.createBuilding = function (numberOfFloors, numberOfElevators, buildingIndex) {
         var _a;
         var container = document.createElement('div');
         container.classList.add('building');
         container.style.width = "".concat(numberOfElevators * 50, "px"); // Adjust building width
-        container.style.marginLeft = "".concat(marginLeft, "px"); // Add margin to the building
+        container.style.marginLeft = "".concat(buildingIndex * (numberOfElevators * 50 + 200), "px"); // Add margin to the building
         (_a = document.getElementById('buildingsContainer')) === null || _a === void 0 ? void 0 : _a.appendChild(container);
-        var buildingsContainer = document.getElementById('buildingsContainer');
-        if (buildingsContainer) {
-            buildingsContainer.style.display = 'flex';
-        }
         return new Building(numberOfFloors, container, numberOfElevators);
     };
     return BuildingFactory;
 }());
 // Create buildings
 var buildingFactory = new BuildingFactory();
-var numberOfFloors = 9;
-var numberOfElevators = 3;
-var numberOfBuildings = 2;
-var buildingMargin = 80 + (numberOfElevators * 50);
-var marginLeft = 0;
+var numberOfFloors = 19;
+var numberOfElevators = 6;
+var numberOfBuildings = 4;
 for (var i = 0; i < numberOfBuildings; i++) {
-    buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
-    marginLeft = buildingMargin;
+    buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
 //ToDo: Improve the Elevator algorithm and update the timer accordingly
 //Todo: Improve way to build floors so no problem would appear at any number of floors

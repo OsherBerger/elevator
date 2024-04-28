@@ -302,17 +302,12 @@ private handleElevatorArrival(floorLevel: number) {
 
 // BuildingFactory class
 class BuildingFactory {
-  createBuilding(numberOfFloors: number, numberOfElevators: number, marginLeft: number) {
+  createBuilding(numberOfFloors: number, numberOfElevators: number, buildingIndex: number) {
     const container = document.createElement('div');
     container.classList.add('building');
     container.style.width = `${numberOfElevators * 50}px`; // Adjust building width
-    container.style.marginLeft = `${marginLeft}px`; // Add margin to the building
+    container.style.marginLeft = `${buildingIndex * (numberOfElevators * 50 + 200)}px`; // Add margin to the building
     document.getElementById('buildingsContainer')?.appendChild(container);
-
-    const buildingsContainer = document.getElementById('buildingsContainer');
-    if (buildingsContainer) {
-      buildingsContainer.style.display = 'flex';
-    }
 
     return new Building(numberOfFloors, container, numberOfElevators);
   }
@@ -320,16 +315,12 @@ class BuildingFactory {
 
 // Create buildings
 const buildingFactory = new BuildingFactory();
-const numberOfFloors = 9;
-const numberOfElevators = 3;
-const numberOfBuildings = 2;
-const buildingMargin = 80 + (numberOfElevators * 50); 
+const numberOfFloors = 19;
+const numberOfElevators = 6;
+const numberOfBuildings = 4;
 
-
-let marginLeft = 0;
 for (let i = 0; i < numberOfBuildings; i++) {
-  buildingFactory.createBuilding(numberOfFloors, numberOfElevators, marginLeft);
-  marginLeft = buildingMargin ; 
+  buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
 
 //ToDo: Improve the Elevator algorithm and update the timer accordingly
