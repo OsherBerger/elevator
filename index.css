@@ -27,7 +27,13 @@
 .floorButtonsContainer {
   position: absolute;
   bottom: 0;
+  display: flex;
+  flex-direction: column-reverse; /* Start from the bottom */
 }
+.building {
+  margin-left: 80px; /* Adjust as needed */
+}
+
 
 .floor {
   background-color: silver;

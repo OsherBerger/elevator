@@ -179,7 +179,8 @@ class Building {
     const floorButtonsContainer = document.createElement('div');
     floorButtonsContainer.classList.add('floorButtonsContainer');
 
-    for (let i = this.numberOfFloors; i >= 0; i--) {
+    // Loop from the ground floor (level 0) to the top floor
+    for (let i = 0; i <= this.numberOfFloors; i++) {
       const button = document.createElement('button');
       button.classList.add('floor', 'metal', 'linear');
       button.innerText = i.toString();
@@ -188,9 +189,8 @@ class Building {
       timer.classList.add('timer');
       button.appendChild(timer); // Append the timer element to the button
 
-
       button.addEventListener('click', () => {
-        this.requestElevator(new Floor(i),button);
+        this.requestElevator(new Floor(i), button);
       });
 
       const div = document.createElement('div');
@@ -199,14 +199,14 @@ class Building {
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
       floorDiv.appendChild(button);
-      
 
-      floorButtonsContainer.appendChild(div);
       floorButtonsContainer.appendChild(floorDiv);
+      floorButtonsContainer.appendChild(div);
     }
 
     this.container.appendChild(floorButtonsContainer);
-  }
+}
+
 
   private createElevatorSystem() {
     const elevatorsContainer = document.createElement('div');
@@ -315,7 +315,7 @@ class BuildingFactory {
 
 // Create buildings
 const buildingFactory = new BuildingFactory();
-const numberOfFloors = 15;
+const numberOfFloors = 5;
 const numberOfElevators = 3;
 const numberOfBuildings = 2;
 const buildingMargin = 80 + (numberOfElevators * 50); 

@@ -174,10 +174,11 @@ var Building = /** @class */ (function () {
             var floorDiv = document.createElement('div');
             floorDiv.classList.add('floor');
             floorDiv.appendChild(button);
-            floorButtonsContainer.appendChild(div);
             floorButtonsContainer.appendChild(floorDiv);
+            floorButtonsContainer.appendChild(div);
         };
-        for (var i = this.numberOfFloors; i >= 0; i--) {
+        // Loop from the ground floor (level 0) to the top floor
+        for (var i = 0; i <= this.numberOfFloors; i++) {
             _loop_1(i);
         }
         this.container.appendChild(floorButtonsContainer);
@@ -278,7 +279,7 @@ var BuildingFactory = /** @class */ (function () {
 }());
 // Create buildings
 var buildingFactory = new BuildingFactory();
-var numberOfFloors = 15;
+var numberOfFloors = 5;
 var numberOfElevators = 3;
 var numberOfBuildings = 2;
 var buildingMargin = 80 + (numberOfElevators * 50);
