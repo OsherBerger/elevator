@@ -137,10 +137,20 @@ var ElevatorSystem = /** @class */ (function () {
             availableElevators[closestElevatorIndex].requestFloor(floor);
         }
         else {
-            // If all elevators are busy, queue the request until an elevator becomes available
-            var distances = this.elevators.map(function (elevator) { return Math.abs(elevator.currentFloor.level - floor.level); });
-            var closestElevatorIndex = distances.indexOf(Math.min.apply(Math, distances));
-            this.elevators[closestElevatorIndex].queue.push(floor);
+            // Find the elevator with the shortest estimated time of arrival (ETA)
+            var shortestETA_1 = Infinity;
+            var selectedElevator_1 = null;
+            this.elevators.forEach(function (elevator) {
+                var distance = Math.abs(elevator.currentFloor.level - floor.level);
+                var ETA = distance * 0.5 + elevator.queue.length * 2; // Adjusting ETA based on queue length
+                if (ETA < shortestETA_1) {
+                    shortestETA_1 = ETA;
+                    selectedElevator_1 = elevator;
+                }
+            });
+            if (selectedElevator_1) {
+                selectedElevator_1.requestFloor(floor);
+            }
         }
     };
     return ElevatorSystem;
@@ -229,10 +239,8 @@ var Building = /** @class */ (function () {
         if (timer) {
             var closestElevator_1 = null;
             var minDistance_1 = Infinity;
-            // Ensure elevatorSystem.elevators only contains Elevator instances
-            var elevators = this.elevatorSystem.elevators.filter(function (elevator) { return elevator instanceof Elevator; });
             // Find the closest elevator to the target floor
-            elevators.forEach(function (elevator) {
+            this.elevatorSystem.elevators.forEach(function (elevator) {
                 var distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
                 if (distance < minDistance_1) {
                     minDistance_1 = distance;
@@ -243,7 +251,9 @@ var Building = /** @class */ (function () {
                 // Use type assertion to ensure TypeScript recognizes closestElevator as an Elevator instance
                 var currentFloor = closestElevator_1.currentFloor;
                 var distance = Math.abs(targetFloor.level - currentFloor.level);
-                var etaSeconds = distance * 0.5; // Assuming 0.5 seconds per floor
+                // Check if the elevator has a queue property before accessing its length
+                var queueLength = closestElevator_1.queue ? closestElevator_1.queue.length : 0;
+                var etaSeconds = distance * 0.5 + queueLength * 2; // Adjusting ETA based on queue length
                 var seconds_1 = etaSeconds;
                 timer.innerText = "".concat(seconds_1);
                 var interval_1 = setInterval(function () {
@@ -285,4 +295,3 @@ var numberOfBuildings = 3;
 for (var i = 0; i < numberOfBuildings; i++) {
     buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
-//ToDo: Improve the Elevator algorithm and update the timer accordingly
