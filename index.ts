@@ -324,4 +324,3 @@ for (let i = 0; i < numberOfBuildings; i++) {
 }
 
 //ToDo: Improve the Elevator algorithm and update the timer accordingly
-//Todo: Improve way to build floors so no problem would appear at any number of floors(Full screen in zoom out to 25%(maxed out) can only get to 75 floors with no scrolling option)
