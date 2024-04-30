@@ -15,7 +15,7 @@ export class ElevatorSystem {
       elevator.currentFloor = new Floor(0);
       this.container.appendChild(elevator.elevatorElement);
       const elevatorImage = document.createElement('img');
-      elevatorImage.src = 'elv.png'; // Set the source of the elevator image
+      elevatorImage.src = '../assets/elv.png'; // Set the source of the elevator image
       elevatorImage.alt = 'elevator';
       elevator.elevatorElement.appendChild(elevatorImage); // Append the image to the elevator container
       this.elevators.push(elevator);

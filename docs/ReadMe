@@ -1,7 +1,9 @@
-TODO:
- חלוקה לקבצים.
- הגיון בקצרה לכל קובץ ולא חפירה על כל שורה...
- להסביר איך מריצים.(איך אני עושה ואם יש זמן להראות איך מריצים בדרכים אחרות כמו מק וכו')
+To run the project:
+  copy project to your computer from git
+  run :
+    (npm install)
+
+    npm start
 
 
 **Project Architecture Overview**

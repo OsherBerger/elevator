@@ -88,7 +88,7 @@ export class Elevator {
   }
 
   playSound() {
-    const audio = new Audio('ding.mp3');
+    const audio = new Audio('../assets/ding.mp3');
     audio.play();
     console.log('Ding!');
   }

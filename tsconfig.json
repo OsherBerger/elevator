@@ -3,7 +3,7 @@
       "target": "ES5",
       "lib": ["ES2017", "DOM"],
       "strict": true,
-      // "outDir": "./dist"
+      "outDir": "./dist"
     }
   }
   
