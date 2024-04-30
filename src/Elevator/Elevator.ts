@@ -1,6 +1,5 @@
 import { Floor } from "../Floor/Floor";
 
-// Elevator class
 export class Elevator {
   currentFloor: Floor;
   isMoving: boolean;
@@ -23,21 +22,18 @@ export class Elevator {
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;
 
-      // Calculate the distance and duration of the animation
       const distance = Math.abs(targetY - currentY);
       const animationDuration = distance * 5;
 
-      // Ensure animationDuration is non-negative
       const duration = Math.max(animationDuration, 0);
 
-      // Animate the elevator's movement
       this.animateElevator(currentY, targetY, duration, () => {
         this.currentFloor = floor;
         console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
         this.updateElevatorPosition();
-        this.dispatchArrivalEvent(); // Dispatch the arrival event
-        this.playSound(); // Play the sound immediately after updating position
-        setTimeout(() => { // Add a 2-second delay before checking the queue and moving again
+        this.dispatchArrivalEvent(); 
+        this.playSound();
+        setTimeout(() => { 
           this.isMoving = false;
           if (this.queue.length > 0) {
             const nextFloor = this.queue.shift();
@@ -45,19 +41,16 @@ export class Elevator {
               this.move(nextFloor);
             }
           } else {
-            this.isWaiting = false; // Reset isWaiting flag
+            this.isWaiting = false; 
           }
         }, 2000);
       });
     } else {
-      // If the elevator is already moving, add the floor to the queue
       this.queue.push(floor);
-      // Update the flag to indicate that the elevator is waiting for its current movement to finish
       this.isWaiting = true;
     }
   }
 
-  // Function to animate the elevator's movement
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
     const startTime = performance.now();
 
@@ -97,7 +90,6 @@ export class Elevator {
     this.elevatorElement.style.transform = `translateY(${translateY})`;
   }
 
-  // Method to dispatch the elevator arrival event
   private dispatchArrivalEvent() {
     const arrivalEvent = new CustomEvent('elevatorArrival', {
       detail: {

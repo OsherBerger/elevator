@@ -9,7 +9,6 @@
   bottom: 0;
   display: flex;
   margin-left: 205px;
-  /* margin-bottom: 10px; if full screen, this change is needed*/
 }
 
 .elevator img {
@@ -31,7 +30,7 @@
   position: absolute;
   bottom: 0;
   display: flex;
-  flex-direction: column-reverse; /* Start from the bottom */
+  flex-direction: column-reverse; 
 }
 
 .floor {

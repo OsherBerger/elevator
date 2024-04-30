@@ -1,6 +1,5 @@
 import { Building } from "../Building/Building";
 
-// BuildingFactory class
 export class BuildingFactory {
   createBuilding(numberOfFloors: number, numberOfElevators: number, buildingIndex: number) {
     const container = document.createElement('div');

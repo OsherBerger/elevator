@@ -3,7 +3,7 @@ import { BuildingFactory } from "./BuildingFactory/BuildingFactory";
 
 // Create buildings
 const buildingFactory = new BuildingFactory();
-const numberOfFloors = 15;
+const numberOfFloors = 25;
 const numberOfElevators = 3;
 const numberOfBuildings = 3;
 
