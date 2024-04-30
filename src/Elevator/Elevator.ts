@@ -85,7 +85,7 @@ export class Elevator {
   }
 
   playSound() {
-    const audio = new Audio('../assets/ding.mp3');
+    const audio = new Audio('../assets/ding.mp3'); //path is for the bundle.js which is in the dis folder
     audio.play();
     console.log('Ding!');
   }
@@ -103,6 +103,4 @@ export class Elevator {
     });
     document.dispatchEvent(arrivalEvent);
   }
-
 }
-

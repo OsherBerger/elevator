@@ -16,5 +16,3 @@ export class BuildingFactory {
     return new Building(numberOfFloors, container, numberOfElevators);
   }
 }
-
-

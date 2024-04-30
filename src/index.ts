@@ -13,4 +13,3 @@ const numberOfBuildings = 2;
 for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
-

@@ -128,5 +128,3 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
    }
  }
 }
-
-

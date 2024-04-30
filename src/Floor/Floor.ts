@@ -10,4 +10,3 @@ export class Floor {
     this.level = level;
   }
 }
-
