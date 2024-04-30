@@ -14,12 +14,11 @@ export class Elevator {
     this.queue = [];
     this.isWaiting = false;
     this.elevatorElement = element;
-    this.updateElevatorPosition(); // Set the initial position
+    this.updateElevatorPosition(); 
   }
 
   move(floor: Floor) {
     if (!this.isMoving) {
-      // If the elevator is not moving, start moving to the requested floor
       this.isMoving = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;

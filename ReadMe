@@ -2,6 +2,7 @@
   Copy & paste the following commands to your terminal:
     git clone https://github.com/OsherBerger/elevator.git
     cd elevator
+    sudo npm i
     npm start
 
 **Project Architecture Overview**
