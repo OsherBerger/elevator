@@ -329,7 +329,7 @@ class BuildingFactory {
 
 // Create buildings
 const buildingFactory = new BuildingFactory();
-const numberOfFloors = 25;
+const numberOfFloors = 15;
 const numberOfElevators = 3;
 const numberOfBuildings = 3;
 

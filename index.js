@@ -289,7 +289,7 @@ var BuildingFactory = /** @class */ (function () {
 }());
 // Create buildings
 var buildingFactory = new BuildingFactory();
-var numberOfFloors = 25;
+var numberOfFloors = 15;
 var numberOfElevators = 3;
 var numberOfBuildings = 3;
 for (var i = 0; i < numberOfBuildings; i++) {
