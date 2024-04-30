@@ -1,7 +1,10 @@
+/**
+ * This script initializes building objects using the BuildingFactory class.
+ * It creates multiple buildings with a specified number of floors and elevators.
+ */
 
 import { BuildingFactory } from "./BuildingFactory/BuildingFactory";
 
-// Create buildings
 const buildingFactory = new BuildingFactory();
 const numberOfFloors = 25;
 const numberOfElevators = 3;

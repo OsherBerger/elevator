@@ -1,3 +1,8 @@
+/**
+ * This script represents an elevator system that manages multiple elevators.
+ * It creates and handles the behavior of multiple elevators within a specified container.
+ */
+
 import { Elevator } from '../Elevator/Elevator';
 import { Floor } from '../Floor/Floor';
 

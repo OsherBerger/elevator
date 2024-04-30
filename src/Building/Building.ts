@@ -1,3 +1,8 @@
+/**
+ * This script represents a building with floors and an elevator system.
+ * It creates floor buttons, manages elevator requests, and updates floor buttons' timers.
+ */
+
 import { Elevator } from '../Elevator/Elevator';
 import { ElevatorSystem } from '../ElevatorSystem/ElevatorSystem';
 import { Floor } from '../Floor/Floor';

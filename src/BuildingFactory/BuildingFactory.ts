@@ -1,3 +1,8 @@
+/**
+ * This script represents a factory class, for creating building objects, with specified configurations.
+ * It creates building elements in the DOM and instantiates Building objects.
+ */
+
 import { Building } from "../Building/Building";
 
 export class BuildingFactory {

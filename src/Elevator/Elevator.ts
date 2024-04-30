@@ -1,3 +1,8 @@
+/**
+ * This script represents an elevator that can move between floors within a building.
+ * It manages the elevator's movement, queue of floor requests, and updates its position visually.
+ */
+
 import { Floor } from "../Floor/Floor";
 
 export class Elevator {
