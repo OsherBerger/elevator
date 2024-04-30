@@ -1,9 +1,14 @@
 **How to run the project**:
-  Copy & paste the following commands to your terminal:
+  Copy & paste the following commands to your (Linux) terminal:
     git clone https://github.com/OsherBerger/elevator.git
     cd elevator
     sudo npm i(on Linux) || npm install(on Windows)
     npm start
+
+**How to change number of Floors/Elevators/Building**
+  Go to 'src' folder.
+  Go to 'index.ts'.
+  Change number of Objects as needed.
 
 **Project Architecture Overview**
 
