@@ -10,7 +10,7 @@ export class BuildingFactory {
     const container = document.createElement('div');
     container.classList.add('building');
     container.style.width = `${numberOfElevators * 100}px`; 
-    container.style.marginLeft = `${buildingIndex * (numberOfElevators * 100 + 300)}px`; 
+    container.style.marginLeft = `${buildingIndex * (numberOfElevators * 100 + 250)}px`; 
     document.getElementById('buildingsContainer')?.appendChild(container);
 
     return new Building(numberOfFloors, container, numberOfElevators);

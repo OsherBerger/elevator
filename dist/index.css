@@ -8,7 +8,7 @@
   position: absolute;
   bottom: 0;
   display: flex;
-  margin-left: 180px;
+  margin-left: 150px;
 }
 
 .elevator img {
@@ -18,9 +18,9 @@
 
 .timer {
   position: absolute;
-  top: 2px;
+  top: 10px;
   left: 90px;
-  font-size:x-large;
+  font-size:xx-large;
 }
 
 .scrollContainer {
@@ -38,7 +38,7 @@
 
 .floor {
   background-color: silver;
-  width: 100px;
+  width:100px;
   background-image: linear-gradient(335deg, #b00 23px, transparent 23px), 
   linear-gradient(155deg, #d00 23px, transparent 23px), 
   linear-gradient(335deg, #b00 23px, transparent 23px), 
@@ -70,10 +70,11 @@
 }
 
 .metal.linear {
-  width: 50px;
-  left: 25px;
-  font-size:x-large;
-  height: 40px;
+  width: 65px;
+  left: 15px;
+  top: 10px;
+  font-size:xx-large;
+  height: 65px;
   border-radius: 2em;
   background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 6%, hsla(0,0%,100%, .1) 7.5%), 
   -webkit-repeating-linear-gradient(left, hsla(0,0%, 0%,0) 0%, hsla(0,0%, 0%,0) 4%, hsla(0,0%, 0%,.03) 4.5%), 
