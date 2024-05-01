@@ -10,7 +10,6 @@ export class Elevator {
   isMoving: boolean;
   queue: Floor[];
   isWaiting: boolean;
-  // hasMoved:boolean;
   elevatorElement: HTMLElement;
 
   constructor(element: HTMLElement) {
@@ -18,7 +17,6 @@ export class Elevator {
     this.isMoving = false;
     this.queue = [];
     this.isWaiting = false;
-    // this.hasMoved = false;
     this.elevatorElement = element;
     this.updateElevatorPosition(); 
   }
@@ -26,7 +24,6 @@ export class Elevator {
   move(floor: Floor) {
     if (!this.isMoving) {
       this.isMoving = true;
-      // this.hasMoved = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;
 

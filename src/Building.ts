@@ -108,7 +108,6 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
       const distance = Math.abs(targetFloor.level - currentFloor.level);
 
       const queueLength = (closestElevator as Elevator).queue ? (closestElevator as Elevator).queue.length : 0;
-      // const hasMoved = (closestElevator as Elevator).hasMoved; 
 
       let etaSeconds = distance * 0.5 + queueLength;
   
