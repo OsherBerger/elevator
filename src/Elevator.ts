@@ -42,7 +42,6 @@ export class Elevator {
         this.dispatchArrivalEvent(); 
         this.playSound();
         setTimeout(() => { 
-          // this.hasMoved = false; 
           this.isMoving = false;
           if (this.queue.length > 0) {
             const nextFloor = this.queue.shift();
