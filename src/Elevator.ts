@@ -27,16 +27,14 @@ export class Elevator {
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 9;
-      const duration = Math.max(animationDuration, 0);
-
-      this.animateElevator(currentY, targetY, duration, () => {
+      const animationDuration = 0.5 * Math.abs(floor.level - this.currentFloor.level) * 1000; 
+      this.animateElevator(currentY, targetY, animationDuration, () => {
         this.currentFloor = floor;
         console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
         this.updateElevatorPosition();
-        this.dispatchArrivalEvent(); 
+        this.dispatchArrivalEvent();
         this.playSound();
-        setTimeout(() => { 
+        setTimeout(() => {
           this.isMoving = false;
           if (this.queue.length > 0) {
             const nextFloor = this.queue.shift();
@@ -44,7 +42,7 @@ export class Elevator {
               this.move(nextFloor);
             }
           } else {
-            this.isWaiting = false; 
+            this.isWaiting = false;
           }
         }, 2000);
       });
@@ -53,6 +51,7 @@ export class Elevator {
       this.isWaiting = true;
     }
   }
+  
 
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
     const startTime = performance.now();
