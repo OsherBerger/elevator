@@ -110,9 +110,9 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
       const hasMoved = (closestElevator as Elevator).hasMoved; 
 
       let etaSeconds = distance * 0.5 + queueLength ;
-      if (hasMoved) {
-        etaSeconds += 2; 
-      }
+      // if (hasMoved) {
+      //   etaSeconds += 2; 
+      // }
 
       let seconds = etaSeconds;
       timer.innerText = `${seconds}`;

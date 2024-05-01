@@ -26,6 +26,7 @@ export class Elevator {
   move(floor: Floor) {
     if (!this.isMoving) {
       this.isMoving = true;
+      // this.hasMoved = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;
 
@@ -41,6 +42,7 @@ export class Elevator {
         this.dispatchArrivalEvent(); 
         this.playSound();
         setTimeout(() => { 
+          // this.hasMoved = false; 
           this.isMoving = false;
           if (this.queue.length > 0) {
             const nextFloor = this.queue.shift();
