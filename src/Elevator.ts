@@ -26,10 +26,8 @@ export class Elevator {
       this.isMoving = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -57 * floor.level;
-
       const distance = Math.abs(targetY - currentY);
       const animationDuration = distance * 9;
-
       const duration = Math.max(animationDuration, 0);
 
       this.animateElevator(currentY, targetY, duration, () => {
