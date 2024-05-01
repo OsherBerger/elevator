@@ -134,7 +134,7 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
         seconds = 2;
         const delayInterval = setInterval(() => {
           seconds--;
-          if (seconds >= 0) {
+          if (seconds >= 1) {
             timer.innerText = `${seconds}`;
           } else {
             clearInterval(delayInterval);
