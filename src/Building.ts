@@ -3,9 +3,9 @@
  * It creates floor buttons, manages elevator requests, and updates floor buttons' timers.
  */
 
-import { Elevator } from '../Elevator/Elevator';
-import { ElevatorSystem } from '../ElevatorSystem/ElevatorSystem';
-import { Floor } from '../Floor/Floor';
+import { Elevator } from './Elevator';
+import { ElevatorSystem } from './ElevatorSystem';
+import { Floor } from './Floor';
 
 export class Building {
   private elevatorSystem!: ElevatorSystem;

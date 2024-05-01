@@ -3,7 +3,7 @@
  * It creates multiple buildings with a specified number of floors and elevators.
  */
 
-import { BuildingFactory } from "./BuildingFactory/BuildingFactory";
+import { BuildingFactory } from "./BuildingFactory";
 
 const buildingFactory = new BuildingFactory();
 const numberOfFloors = 15;

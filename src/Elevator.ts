@@ -3,7 +3,7 @@
  * It manages the elevator's movement, queue of floor requests, and updates its position visually.
  */
 
-import { Floor } from "../Floor/Floor";
+import { Floor } from "./Floor";
 
 export class Elevator {
   currentFloor: Floor;

@@ -3,8 +3,8 @@
  * It creates and handles the behavior of multiple elevators within a specified container.
  */
 
-import { Elevator } from '../Elevator/Elevator';
-import { Floor } from '../Floor/Floor';
+import { Elevator } from './Elevator';
+import { Floor } from './Floor';
 
 export class ElevatorSystem {
   elevators: Elevator[] = [];
@@ -39,7 +39,7 @@ export class ElevatorSystem {
       let selectedElevator: Elevator | null = null;
       this.elevators.forEach(elevator => {
         const distance = Math.abs(elevator.currentFloor.level - floor.level);
-        const ETA = distance * 0.5 + elevator.queue.length * 2; 
+        const ETA = distance * 0.5 + elevator.queue.length ; 
         if (ETA < shortestETA) {
           shortestETA = ETA;
           selectedElevator = elevator;

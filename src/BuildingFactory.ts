@@ -3,7 +3,7 @@
  * It creates building elements in the DOM and instantiates Building objects.
  */
 
-import { Building } from "../Building/Building";
+import { Building } from "./Building";
 
 export class BuildingFactory {
   createBuilding(numberOfFloors: number, numberOfElevators: number, buildingIndex: number) {
