@@ -50,7 +50,6 @@ export class ElevatorSystem {
         }
     }
   
-    // If all elevators are busy or there are no elevators, request from the ground floor
     let shortestETA = Infinity;
     let selectedElevator: Elevator | null = null;
     
