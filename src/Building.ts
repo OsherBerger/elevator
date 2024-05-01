@@ -62,19 +62,13 @@ export class Building {
   }
 
   private requestElevator(floor: Floor, button: HTMLButtonElement) {
-    if (button.disabled) {
-      return;
-    }
-  
-    button.disabled = true;
-  
     this.elevatorSystem.requestElevator(floor);
-  
+
     button.style.color = 'green';
-  
+
     this.updateTimer(floor, button);
   }
-  
+
   private setupElevatorArrivalListener() {
     document.addEventListener('elevatorArrival', (event) => {
       const floorLevel = (event as CustomEvent).detail.floorLevel;
