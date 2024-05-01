@@ -35,9 +35,12 @@ export class Building {
   
       const div = document.createElement('div');
       div.classList.add('blackline');
+      div.style.height = '7px'; 
+
   
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
+      floorDiv.style.height = '103px'; 
       floorDiv.appendChild(button);
   
       floorButtonsContainer.appendChild(floorDiv);
@@ -130,7 +133,6 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
         timer.style.color = 'red';
         timer.innerText = `2`;
 
-        // Change the timer color to red and start countdown from 2
         seconds = 2;
         const delayInterval = setInterval(() => {
           seconds--;

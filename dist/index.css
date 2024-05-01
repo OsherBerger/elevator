@@ -1,6 +1,6 @@
 .blackline {
   height: 7px;
-  width: 200px;
+  width: 100px;
   background-color: #000000;
 }
 
@@ -8,19 +8,19 @@
   position: absolute;
   bottom: 0;
   display: flex;
-  margin-left: 255px;
+  margin-left: 180px;
 }
 
 .elevator img {
-  width: 45px;
-  height: 45px;
+  width: 95px;
+  height: 95px;
 }
 
 .timer {
   position: absolute;
   top: 2px;
-  left: 130px;
-  font-size:xx-large;
+  left: 90px;
+  font-size:x-large;
 }
 
 .scrollContainer {
@@ -35,15 +35,20 @@
   flex-direction: column-reverse; 
 }
 
+
 .floor {
   background-color: silver;
-  width: 200px;
+  width: 100px;
   background-image: linear-gradient(335deg, #b00 23px, transparent 23px), 
-                    linear-gradient(155deg, #d00 23px, transparent 23px), 
-                    linear-gradient(335deg, #b00 23px, transparent 23px), 
-                    linear-gradient(155deg, #d00 23px, transparent 23px);
+  linear-gradient(155deg, #d00 23px, transparent 23px), 
+  linear-gradient(335deg, #b00 23px, transparent 23px), 
+  linear-gradient(155deg, #d00 23px, transparent 23px);
   background-size: 58px 58px;
   background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+}
+
+.floor button {
+  top: 25%; 
 }
 
 .metal {
@@ -66,7 +71,7 @@
 
 .metal.linear {
   width: 50px;
-  left: 75px;
+  left: 25px;
   font-size:x-large;
   height: 40px;
   border-radius: 2em;
