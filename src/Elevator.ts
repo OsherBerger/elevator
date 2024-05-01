@@ -10,6 +10,7 @@ export class Elevator {
   isMoving: boolean;
   queue: Floor[];
   isWaiting: boolean;
+  hasMoved:boolean;
   elevatorElement: HTMLElement;
 
   constructor(element: HTMLElement) {
@@ -17,6 +18,7 @@ export class Elevator {
     this.isMoving = false;
     this.queue = [];
     this.isWaiting = false;
+    this.hasMoved = false;
     this.elevatorElement = element;
     this.updateElevatorPosition(); 
   }

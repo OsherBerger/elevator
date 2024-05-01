@@ -88,7 +88,6 @@ private handleElevatorArrival(floorLevel: number) {
     }
   });
 }
-
 private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
   const timer = button.querySelector('.timer') as HTMLDivElement;
   if (timer) {
@@ -108,8 +107,12 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
       const distance = Math.abs(targetFloor.level - currentFloor.level);
 
       const queueLength = (closestElevator as Elevator).queue ? (closestElevator as Elevator).queue.length : 0;
+      const hasMoved = (closestElevator as Elevator).hasMoved; 
 
-      const etaSeconds = distance * 0.5 + queueLength * 2 ; 
+      let etaSeconds = distance * 0.5 + queueLength ;
+      if (hasMoved) {
+        etaSeconds += 2; 
+      }
 
       let seconds = etaSeconds;
       timer.innerText = `${seconds}`;
@@ -127,4 +130,5 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
      }
    }
  }
+
 }
