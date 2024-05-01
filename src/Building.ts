@@ -90,62 +90,60 @@ private handleElevatorArrival(floorLevel: number) {
 }
 
 
-private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
-  let timer = button.querySelector('.timer') as HTMLDivElement;
+  private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
+    let timer = button.querySelector('.timer') as HTMLDivElement;
 
-  if (!timer) {
-    timer = document.createElement('div');
-    timer.classList.add('timer');
-    button.appendChild(timer);
-  }
-
-  let closestElevator: Elevator | null = null;
-  let minDistance = Infinity;
-
-  this.elevatorSystem.elevators.forEach((elevator: Elevator) => {
-    const distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
-    if (distance < minDistance) {
-      minDistance = distance;
-      closestElevator = elevator;
+    if (!timer) {
+      timer = document.createElement('div');
+      timer.classList.add('timer');
+      button.appendChild(timer);
     }
-  });
 
-  if (closestElevator) {
-    const currentFloor = (closestElevator as Elevator).currentFloor;
-    const distance = Math.abs(targetFloor.level - currentFloor.level);
+    let closestElevator: Elevator | null = null;
+    let minDistance = Infinity;
 
-    const queueLength = (closestElevator as Elevator).queue ? (closestElevator as Elevator).queue.length : 0;
-
-    let etaSeconds = distance * 0.5 + queueLength;
-
-    let seconds = etaSeconds;
-    timer.innerText = `${seconds}`;
-    timer.style.color = 'green'; 
-
-    const interval = setInterval(() => {
-      seconds--;
-      if (seconds >= 0) {
-        timer.innerText = `${seconds}`;
-      } else {
-        button.style.color = '';
-        timer.style.color = 'red';
-        timer.innerText = `2`;
-
-        seconds = 2; 
-        const delayInterval = setInterval(() => {
-          seconds--;
-          if (seconds >= 0) {
-            timer.innerText = `${seconds}`;
-          } else {
-            clearInterval(delayInterval);
-            timer.remove();
-          }
-        }, 500);
-        clearInterval(interval);
+    this.elevatorSystem.elevators.forEach((elevator: Elevator) => {
+      const distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestElevator = elevator;
       }
-    }, 500);
+    });
+
+    if (closestElevator) {
+      const currentFloor = (closestElevator as Elevator).currentFloor;
+      const distance = Math.abs(targetFloor.level - currentFloor.level);
+
+      const queueLength = (closestElevator as Elevator).queue ? (closestElevator as Elevator).queue.length : 0;
+
+      let etaSeconds = distance * 0.5 + queueLength;
+
+      let seconds = etaSeconds;
+      timer.innerText = `${seconds}`;
+      timer.style.color = 'green'; 
+
+      const interval = setInterval(() => {
+        seconds--;
+        if (seconds >= 0) {
+          timer.innerText = `${seconds}`;
+        } else {
+          button.style.color = '';
+          timer.style.color = 'red';
+          timer.innerText = `2`;
+
+          seconds = 2; 
+          const delayInterval = setInterval(() => {
+            seconds--;
+            if (seconds >= 0) {
+              timer.innerText = `${seconds}`;
+            } else {
+              clearInterval(delayInterval);
+              timer.remove();
+            }
+          }, 500);
+          clearInterval(interval);
+        }
+      }, 500);
+    }
   }
-}
-
-
 }
