@@ -8,7 +8,7 @@
   position: absolute;
   bottom: 0;
   display: flex;
-  margin-left: 205px;
+  margin-left: 255px;
 }
 
 .elevator img {
@@ -17,7 +17,7 @@
 }
 
 .timer {
-  margin-left: 50px;
+  margin-left: 120px;
   transform: translateY(-100%);
 }
 
