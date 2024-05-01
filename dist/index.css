@@ -17,8 +17,10 @@
 }
 
 .timer {
-  margin-left: 120px;
-  transform: translateY(-100%);
+  position: absolute;
+  top: 5px;
+  left: 130px;
+  font-size:xx-large;
 }
 
 .scrollContainer {
@@ -65,9 +67,9 @@
 .metal.linear {
   width: 50px;
   left: 75px;
-  font-size: 2em;
+  font-size:x-large;
   height: 40px;
-  border-radius: .5em;
+  border-radius: 2em;
   background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 6%, hsla(0,0%,100%, .1) 7.5%), 
   -webkit-repeating-linear-gradient(left, hsla(0,0%, 0%,0) 0%, hsla(0,0%, 0%,0) 4%, hsla(0,0%, 0%,.03) 4.5%), 
   -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%), 
