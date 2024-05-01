@@ -28,7 +28,7 @@ export class Elevator {
       const targetY = -57 * floor.level;
 
       const distance = Math.abs(targetY - currentY);
-      const animationDuration = distance * 5;
+      const animationDuration = distance * 9;
 
       const duration = Math.max(animationDuration, 0);
 

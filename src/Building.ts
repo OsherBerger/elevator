@@ -140,10 +140,10 @@ private handleElevatorArrival(floorLevel: number) {
               clearInterval(delayInterval);
               timer.remove();
             }
-          }, 500);
+          }, 1000);
           clearInterval(interval);
         }
-      }, 500);
+      }, 1000);
     }
   }
 }
