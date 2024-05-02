@@ -77,7 +77,6 @@ export class Building {
       }
     });
   }
-
   private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
     let timer = button.querySelector('.timer') as HTMLDivElement;
     if (!timer) {
@@ -107,20 +106,8 @@ export class Building {
         if (seconds > 0) {
           timer.innerText = `${seconds}`;
         } else {
-          button.style.color = '';
-          timer.style.color = 'red';
-          timer.innerText = `2`;
-          seconds = 2;
-          const delayInterval = setInterval(() => {
-            seconds -= 0.5;
-            if (seconds >= 0.5) {
-              timer.innerText = `${seconds}`;
-            } else {
-              clearInterval(delayInterval);
-              timer.remove();
-            }
-          }, 500);
           clearInterval(interval);
+          timer.remove();
         }
       }, 500);
     }
