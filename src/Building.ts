@@ -19,38 +19,29 @@ export class Building {
   private createFloorButtons() {
     const floorButtonsContainer = document.createElement('div');
     floorButtonsContainer.classList.add('floorButtonsContainer');
-  
     for (let i = 0; i <= this.numberOfFloors; i++) {
       const button = document.createElement('button');
       button.classList.add('floor', 'metal', 'linear');
       button.innerText = i.toString();
-  
       const timer = document.createElement('div');
       timer.classList.add('timer');
       button.appendChild(timer); 
-  
       button.addEventListener('click', () => {
         this.requestElevator(new Floor(i), button);
       });
-  
       const div = document.createElement('div');
       div.classList.add('blackline');
       div.style.height = '7px'; 
-
-  
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
       floorDiv.style.height = '103px'; 
       floorDiv.appendChild(button);
-  
       floorButtonsContainer.appendChild(floorDiv);
       floorButtonsContainer.appendChild(div);
     }
-  
     const scrollContainer = document.createElement('div');
     scrollContainer.classList.add('scrollContainer');
     scrollContainer.appendChild(floorButtonsContainer);
-  
     this.container.appendChild(scrollContainer);
   }
 
@@ -58,17 +49,13 @@ export class Building {
     const elevatorsContainer = document.createElement('div');
     elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
     elevatorsContainer.style.width = `${this.numberOfElevators * 50}px`; 
-
     this.container.appendChild(elevatorsContainer);
-
     this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
   }
 
   private requestElevator(floor: Floor, button: HTMLButtonElement) {
     this.elevatorSystem.requestElevator(floor);
-
     button.style.color = 'green';
-
     this.updateTimer(floor, button);
   }
 
@@ -79,31 +66,27 @@ export class Building {
     });
   }
 
-private handleElevatorArrival(floorLevel: number) {
-  const buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
-
-  buttons.forEach((button) => {
-    if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
-      const timer = button.querySelector('.timer');
-      if (timer) {
-        timer.remove();
+  private handleElevatorArrival(floorLevel: number) {
+    const buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
+    buttons.forEach((button) => {
+      if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
+        const timer = button.querySelector('.timer');
+        if (timer) {
+          timer.remove();
+        }
       }
-    }
-  });
-}
+    });
+  }
 
-private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
+  private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
     let timer = button.querySelector('.timer') as HTMLDivElement;
-
     if (!timer) {
       timer = document.createElement('div');
       timer.classList.add('timer');
       button.appendChild(timer);
     }
-
     let closestElevator: Elevator | null = null;
     let minDistance = Infinity;
-
     this.elevatorSystem.elevators.forEach((elevator: Elevator) => {
       const distance = Math.abs(targetFloor.level - elevator.currentFloor.level);
       if (distance < minDistance) {
@@ -111,19 +94,14 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
         closestElevator = elevator;
       }
     });
-
     if (closestElevator) {
       const currentFloor = (closestElevator as Elevator).currentFloor;
       const distance = Math.abs(targetFloor.level - currentFloor.level);
-
       const queueLength = (closestElevator as Elevator).queue ? (closestElevator as Elevator).queue.length : 0;
-
       let etaSeconds = distance * 0.5 + queueLength;
       let seconds = etaSeconds;
-
       timer.innerText = `${seconds}`;
       timer.style.color = 'green';
-
       const interval = setInterval(() => {
         seconds -= 0.5;
         if (seconds > 0) {
@@ -132,7 +110,6 @@ private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
           button.style.color = '';
           timer.style.color = 'red';
           timer.innerText = `2`;
-
           seconds = 2;
           const delayInterval = setInterval(() => {
             seconds -= 0.5;
