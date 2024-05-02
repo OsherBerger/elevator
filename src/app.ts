@@ -8,7 +8,7 @@ import { BuildingFactory } from "./BuildingFactory";
 const buildingFactory = new BuildingFactory();
 const numberOfFloors = 7;
 const numberOfElevators = 3;
-const numberOfBuildings = 3;
+const numberOfBuildings = 1;
 
 for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
