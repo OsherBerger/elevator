@@ -29,43 +29,34 @@ export class ElevatorSystem {
 
   requestElevator(floor: Floor) {
     const availableElevators: Elevator[] = this.elevators.filter(elevator => !elevator.isWaiting);
-  
     if (availableElevators.length > 0) {
-        let selectedElevator: Elevator | null = null;
-        let minETA = Infinity;
-        
-        availableElevators.forEach(elevator => {
-            const distanceToRequestedFloor = Math.abs(elevator.currentFloor.level - floor.level);
-            const ETA = distanceToRequestedFloor * 0.5 + elevator.queue.length ; 
-            
-            if (ETA < minETA) {
-                minETA = ETA;
-                selectedElevator = elevator;
-            }
-        });
-        
-        if (selectedElevator) {
-            (selectedElevator as Elevator).requestFloor(floor);
-            return;
-        }
+      let selectedElevator: Elevator | null = null;
+      let minETA = Infinity;  
+      availableElevators.forEach(elevator => {
+          const distanceToRequestedFloor = Math.abs(elevator.currentFloor.level - floor.level);
+          const ETA = distanceToRequestedFloor * 0.5 + elevator.queue.length ; 
+          if (ETA < minETA) {
+              minETA = ETA;
+              selectedElevator = elevator;
+          }
+      });
+      if (selectedElevator) {
+        (selectedElevator as Elevator).requestFloor(floor);
+        return;
+      }
     }
-  
     let shortestETA = Infinity;
     let selectedElevator: Elevator | null = null;
-    
     this.elevators.forEach(elevator => {
       const distance = Math.abs(elevator.currentFloor.level - floor.level);
       const ETA = distance * 0.5 + elevator.queue.length ; 
-      
       if (ETA < shortestETA) {
           shortestETA = ETA;
           selectedElevator = elevator;
       }
-  });
-
-  if (selectedElevator) {
+    });
+    if (selectedElevator) {
       (selectedElevator as Elevator).requestFloor(floor);
+    }
   }
 }
-}
-
