@@ -9,7 +9,6 @@ import { Floor } from './Floor';
 
 export class Building {
   private elevatorSystem!: ElevatorSystem;
-  private buttonDisabled: boolean = false; // Track button disabled state
 
   constructor(private numberOfFloors: number, private container: HTMLElement, private numberOfElevators: number) {
     this.createFloorButtons();
@@ -31,17 +30,14 @@ export class Building {
       button.appendChild(timer); 
   
       button.addEventListener('click', () => {
-        if (!this.buttonDisabled) {
-          this.buttonDisabled = true; // Disable button on click
-          button.style.color = 'green';
-          this.requestElevator(new Floor(i), button);
-        }
+        this.requestElevator(new Floor(i), button);
       });
   
       const div = document.createElement('div');
       div.classList.add('blackline');
       div.style.height = '7px'; 
 
+  
       const floorDiv = document.createElement('div');
       floorDiv.classList.add('floor');
       floorDiv.style.height = '103px'; 
@@ -70,6 +66,9 @@ export class Building {
 
   private requestElevator(floor: Floor, button: HTMLButtonElement) {
     this.elevatorSystem.requestElevator(floor);
+
+    button.style.color = 'green';
+
     this.updateTimer(floor, button);
   }
 
@@ -80,22 +79,20 @@ export class Building {
     });
   }
 
-  private handleElevatorArrival(floorLevel: number) {
-    this.buttonDisabled = false; // Enable button when elevator arrives
-    const buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
+private handleElevatorArrival(floorLevel: number) {
+  const buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
 
-    buttons.forEach((button) => {
-      if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
-        const timer = button.querySelector('.timer');
-        if (timer) {
-          timer.remove();
-        }
+  buttons.forEach((button) => {
+    if ((button as HTMLButtonElement).innerText === floorLevel.toString()) {
+      const timer = button.querySelector('.timer');
+      if (timer) {
+        timer.remove();
       }
-    });
-    this.elevatorSystem.elevatorArrived(floorLevel);
-  }
+    }
+  });
+}
 
-  private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
+private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
     let timer = button.querySelector('.timer') as HTMLDivElement;
 
     if (!timer) {

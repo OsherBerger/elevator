@@ -26,6 +26,7 @@ export class Elevator {
       this.isMoving = true;
       const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
       const targetY = -110 * floor.level;
+      const distance = Math.abs(targetY - currentY);
       const animationDuration = 0.5 * Math.abs(floor.level - this.currentFloor.level) * 1000; 
       this.animateElevator(currentY, targetY, animationDuration, () => {
         this.currentFloor = floor;
@@ -50,20 +51,25 @@ export class Elevator {
       this.isWaiting = true;
     }
   }
+  
 
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
     const startTime = performance.now();
+
     const animate = (currentTime: number) => {
       const elapsedTime = currentTime - startTime;
       const progress = Math.min(elapsedTime / duration, 1);
       const newPosition = start + (end - start) * progress;
+
       this.elevatorElement.style.transform = `translateY(${newPosition}px)`;
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
         callback();
       }
     };
+
     requestAnimationFrame(animate);
   }
 
