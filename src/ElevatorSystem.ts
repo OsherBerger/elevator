@@ -8,6 +8,7 @@ import { Floor } from './Floor';
 
 export class ElevatorSystem {
   elevators: Elevator[] = [];
+  floorsWithElevator: Set<number> = new Set(); // Track floors with an elevator
 
   constructor(private container: HTMLElement, private numberOfElevators: number) {
     this.createElevators();
@@ -25,23 +26,28 @@ export class ElevatorSystem {
       this.elevators.push(elevator);
     }
   }
-  
 
   requestElevator(floor: Floor) {
+    if (this.floorsWithElevator.has(floor.level)) {
+      // Do nothing if an elevator is already at this floor
+      return;
+    }
+
     const availableElevators: Elevator[] = this.elevators.filter(elevator => !elevator.isWaiting);
     if (availableElevators.length > 0) {
       let selectedElevator: Elevator | null = null;
       let minETA = Infinity;  
       availableElevators.forEach(elevator => {
-          const distanceToRequestedFloor = Math.abs(elevator.currentFloor.level - floor.level);
-          const ETA = distanceToRequestedFloor * 0.5 + elevator.queue.length ; 
-          if (ETA < minETA) {
-              minETA = ETA;
-              selectedElevator = elevator;
-          }
+        const distanceToRequestedFloor = Math.abs(elevator.currentFloor.level - floor.level);
+        const ETA = distanceToRequestedFloor * 0.5 + elevator.queue.length; 
+        if (ETA < minETA) {
+          minETA = ETA;
+          selectedElevator = elevator;
+        }
       });
       if (selectedElevator) {
         (selectedElevator as Elevator).requestFloor(floor);
+        this.floorsWithElevator.add(floor.level); // Mark floor as having an elevator
         return;
       }
     }
@@ -49,14 +55,20 @@ export class ElevatorSystem {
     let selectedElevator: Elevator | null = null;
     this.elevators.forEach(elevator => {
       const distance = Math.abs(elevator.currentFloor.level - floor.level);
-      const ETA = distance * 0.5 + elevator.queue.length ; 
+      const ETA = distance * 0.5 + elevator.queue.length; 
       if (ETA < shortestETA) {
-          shortestETA = ETA;
-          selectedElevator = elevator;
+        shortestETA = ETA;
+        selectedElevator = elevator;
       }
     });
     if (selectedElevator) {
       (selectedElevator as Elevator).requestFloor(floor);
+      this.floorsWithElevator.add(floor.level); // Mark floor as having an elevator
     }
   }
+
+  elevatorArrived(floorLevel: number) {
+    this.floorsWithElevator.delete(floorLevel); // Remove floor from set when elevator arrives
+  }
 }
+
