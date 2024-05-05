@@ -21,38 +21,54 @@ export class Elevator {
     this.updateElevatorPosition(); 
   }
 
-    /**
+  /**
    * Initiates the movement of the elevator to the specified floor.
    * @param floor The target floor.
    */
   move(floor: Floor) {
     if (!this.isMoving) {
       this.isMoving = true;
-      const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
-      const targetY = -110 * floor.level;
-      const animationDuration = 0.5 * Math.abs(floor.level - this.currentFloor.level) * 1000; 
-      this.animateElevator(currentY, targetY, animationDuration, () => {
-        this.currentFloor = floor;
-        console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
-        this.updateElevatorPosition();
-        this.dispatchArrivalEvent();
-        this.playSound();
-        setTimeout(() => {
-          this.isMoving = false;
-          if (this.queue.length > 0) {
-            const nextFloor = this.queue.shift();
-            if (nextFloor) {
-              this.move(nextFloor);
-            }
-          } else {
-            this.isWaiting = false;
-          }
-        }, 2000);
-      });
+      this.startElevatorMovement(floor);
     } else {
       this.queue.push(floor);
       this.isWaiting = true;
     }
+  }
+
+  /**
+   * Starts the elevator's movement animation.
+   * @param floor The target floor.
+   */
+  startElevatorMovement(floor: Floor) {
+    const currentY = parseInt(getComputedStyle(this.elevatorElement).getPropertyValue('transform').split(',')[5], 10);
+    const targetY = -110 * floor.level;
+    const animationDuration = 0.5 * Math.abs(floor.level - this.currentFloor.level) * 1000; 
+    this.animateElevator(currentY, targetY, animationDuration, () => {
+      this.finishElevatorMovement(floor);
+    });
+  }
+
+  /**
+   * Finishes the elevator's movement after reaching the target floor.
+   * @param floor The target floor.
+   */
+  finishElevatorMovement(floor: Floor) {
+    this.currentFloor = floor;
+    console.log(`Elevator arrived at floor ${this.currentFloor.level}`);
+    this.updateElevatorPosition();
+    this.dispatchArrivalEvent();
+    this.playSound();
+    setTimeout(() => {
+      this.isMoving = false;
+      if (this.queue.length > 0) {
+        const nextFloor = this.queue.shift();
+        if (nextFloor) {
+          this.move(nextFloor);
+        }
+      } else {
+        this.isWaiting = false;
+      }
+    }, 2000);
   }
 
   /**
