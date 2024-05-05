@@ -4,6 +4,19 @@
   background-color: #000000;
 }
 
+.elevatorBg {/*Optional feature*/
+  background-image: url('./assets/elvbg.jpg');
+  position: fixed;
+  width: 432px;
+  height: 288px;
+  background-size:cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 115px;
+  z-index: -1;
+}
+
 .elevator {
   position: absolute;
   bottom: 0;
@@ -14,6 +27,7 @@
 .elevator img {
   width: 95px;
   height: 95px;
+  background-color: white; 
 }
 
 .timer {
@@ -21,6 +35,7 @@
   top: 10px;
   left: 90px;
   font-size:xx-large;
+  background-color: white; 
 }
 
 .scrollContainer {

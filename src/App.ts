@@ -13,9 +13,22 @@ const numberOfFloors = 7;
 const numberOfElevators = 3;
 
 // Define the number of buildings to create
-const numberOfBuildings = 3;
+const numberOfBuildings = 1;
 
 // Create buildings using the BuildingFactory
 for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
+
+// Optional feature: 
+// Dynamically create elevator background elements
+// const createElevatorBackgrounds = (numberOfFloors: number) => {
+//   for (let i = 0; i < numberOfFloors; i++) {
+//     const elevatorBg = document.createElement('div');
+//     elevatorBg.classList.add('elevatorBg');
+//     elevatorBg.style.top = `${i * 300}px`; 
+//     document.body.appendChild(elevatorBg);
+//   }
+// };
+
+// createElevatorBackgrounds(numberOfFloors);

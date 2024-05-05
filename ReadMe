@@ -14,6 +14,9 @@
   Method 1: Use the keys:'Ctrl' + '-' together, as much as needed.
   Method 2: Use the scrolling option.
 
+**Optional Feature**
+  To add Background image, uncomment the Background part from App.ts
+
 **Project Architecture Overview**
 
 The Elevator System project aims to simulate an elevator system within a building.
