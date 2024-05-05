@@ -1,6 +1,6 @@
-/**
- * This script represents an elevator system that manages multiple elevators.
- * It creates and handles the behavior of multiple elevators within a specified container.
+/** ElevatorSystem.ts
+ * Represents an elevator system that manages multiple elevators.
+ * Creates and handles the behavior of multiple elevators within a specified container.
  */
 
 import { Elevator } from './Elevator';
@@ -13,6 +13,9 @@ export class ElevatorSystem {
     this.createElevators();
   }
 
+  /**
+   * Creates elevator instances based on the specified number of elevators.
+   */  
   private createElevators() {
     for (let i = 0; i < this.numberOfElevators; i++) {
       const elevator = new Elevator(document.createElement('div')); 
@@ -26,7 +29,10 @@ export class ElevatorSystem {
     }
   }
   
-
+  /**
+   * Requests an elevator to serve a floor.
+   * @param floor The floor where the elevator is requested.
+   */
   requestElevator(floor: Floor) {
     const availableElevators: Elevator[] = this.elevators.filter(elevator => !elevator.isWaiting);
     if (availableElevators.length > 0) {

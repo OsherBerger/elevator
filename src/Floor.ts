@@ -1,5 +1,5 @@
-/**
- * This script represents a floor in a building.
+/** Floor.ts
+ * Represents a floor in a building.
  * Each floor has a specific level number.
  */
 

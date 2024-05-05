@@ -1,6 +1,6 @@
-/**
- * This script represents an elevator that can move between floors within a building.
- * It manages the elevator's movement, queue of floor requests, and updates its position visually.
+/** Elevator.ts
+ * Represents an elevator that can move between floors within a building.
+ * Manages the elevator's movement, queue of floor requests, and updates its position visually.
  */
 
 import { Floor } from "./Floor";
@@ -21,6 +21,10 @@ export class Elevator {
     this.updateElevatorPosition(); 
   }
 
+    /**
+   * Initiates the movement of the elevator to the specified floor.
+   * @param floor The target floor.
+   */
   move(floor: Floor) {
     if (!this.isMoving) {
       this.isMoving = true;
@@ -51,6 +55,13 @@ export class Elevator {
     }
   }
 
+  /**
+   * Animates the elevator's movement between floors.
+   * @param start The starting position.
+   * @param end The ending position.
+   * @param duration The duration of the animation.
+   * @param callback A callback function to execute after the animation completes.
+   */
   animateElevator(start: number, end: number, duration: number, callback: () => void) {
     const startTime = performance.now();
     const animate = (currentTime: number) => {
@@ -67,6 +78,11 @@ export class Elevator {
     requestAnimationFrame(animate);
   }
 
+
+  /**
+   * Requests the elevator to stop at a specific floor.
+   * @param floor The target floor.
+   */
   requestFloor(floor: Floor) {
     if (!this.isWaiting) {
       this.move(floor);
@@ -75,17 +91,26 @@ export class Elevator {
     }
   }
 
+ /**
+   * Plays a sound when the elevator arrives at a floor.
+   */
   playSound() {
     const audio = new Audio('../assets/ding.mp3'); //path is for the bundle.js which is in the dis folder
     audio.play();
     console.log('Ding!');
   }
 
+  /**
+   * Updates the elevator's position visually.
+   */
   updateElevatorPosition() {
     const translateY = `calc(${this.currentFloor.level} * -110px)`;
     this.elevatorElement.style.transform = `translateY(${translateY})`;
   }
 
+  /**
+   * Dispatches an event when the elevator arrives at a floor.
+   */
   private dispatchArrivalEvent() {
     const arrivalEvent = new CustomEvent('elevatorArrival', {
       detail: {

@@ -1,6 +1,6 @@
-/**
- * This script represents a building with floors and an elevator system.
- * It creates floor buttons, manages elevator requests, and updates floor buttons' timers.
+/** Building.ts
+ * Represents a building with floors and an elevator system.
+ * Creates floor buttons, manages elevator requests, and updates floor buttons' timers.
  */
 
 import { Elevator } from './Elevator';
@@ -16,6 +16,9 @@ export class Building {
     this.setupElevatorArrivalListener();
   }
 
+  /**
+   * Creates floor buttons for each floor of the building.
+   */
   private createFloorButtons() {
     const floorButtonsContainer = document.createElement('div');
     floorButtonsContainer.classList.add('floorButtonsContainer');
@@ -45,6 +48,9 @@ export class Building {
     this.container.appendChild(scrollContainer);
   }
 
+/**
+   * Initializes the elevator system for the building.
+   */
   private createElevatorSystem() {
     const elevatorsContainer = document.createElement('div');
     elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
@@ -53,12 +59,20 @@ export class Building {
     this.elevatorSystem = new ElevatorSystem(elevatorsContainer, this.numberOfElevators);
   }
 
+ /**
+   * Requests an elevator for the specified floor.
+   * @param floor The floor from which the elevator is requested.
+   * @param button The button associated with the floor.
+   */
   private requestElevator(floor: Floor, button: HTMLButtonElement) {
     this.elevatorSystem.requestElevator(floor);
     button.style.color = 'green';
     this.updateTimer(floor, button);
   }
 
+  /**
+   * Sets up a listener for elevator arrival events.
+   */
   private setupElevatorArrivalListener() {
     document.addEventListener('elevatorArrival', (event) => {
       const floorLevel = (event as CustomEvent).detail.floorLevel;
@@ -66,6 +80,10 @@ export class Building {
     });
   }
 
+  /**
+   * Handles the arrival of an elevator at a floor.
+   * @param floorLevel The level of the floor where the elevator arrived.
+   */
   private handleElevatorArrival(floorLevel: number) {
     const buttons = document.querySelectorAll('.floorButtonsContainer .floor button');
     buttons.forEach((button) => {
@@ -78,6 +96,11 @@ export class Building {
     });
   }
 
+  /**
+   * Updates the timer for floor buttons indicating elevator arrival.
+   * @param targetFloor The floor for which the timer is updated.
+   * @param button The button associated with the floor.
+   */
   private updateTimer(targetFloor: Floor, button: HTMLButtonElement) {
     let timer = button.querySelector('.timer') as HTMLDivElement;
     if (!timer) {
