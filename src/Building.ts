@@ -10,6 +10,13 @@ import { Floor } from './Floor';
 export class Building {
   private elevatorSystem!: ElevatorSystem;
 
+
+  /**
+   * Constructs a Building object with the specified number of floors, container element, and number of elevators.
+   * @param numberOfFloors The number of floors in the building.
+   * @param container The container element where the building will be displayed.
+   * @param numberOfElevators The number of elevators in the building.
+   */
   constructor(private numberOfFloors: number, private container: HTMLElement, private numberOfElevators: number) {
     this.createFloorButtons();
     this.createElevatorSystem();

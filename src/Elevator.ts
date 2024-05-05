@@ -12,6 +12,10 @@ export class Elevator {
   isWaiting: boolean;
   elevatorElement: HTMLElement;
 
+  /**
+   * Constructs an Elevator object with the specified HTML element.
+   * @param element The HTML element representing the elevator.
+   */
   constructor(element: HTMLElement) {
     this.currentFloor = new Floor(0);
     this.isMoving = false;

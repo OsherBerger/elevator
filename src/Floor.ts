@@ -6,7 +6,11 @@
 export class Floor {
   level: number;
 
-  constructor(level: number) {
+   /**
+   * Constructs a Floor object with the specified level number.
+   * @param level The level number of the floor.
+   */
+   constructor(level: number) {
     this.level = level;
   }
 }
