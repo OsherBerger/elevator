@@ -20,15 +20,14 @@ for (let i = 0; i < numberOfBuildings; i++) {
   buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
 }
 
-// Optional feature: 
-// Dynamically create elevator background elements
+// // Optional feature: 
+// // Dynamically create elevator background elements
 // const createElevatorBackgrounds = (numberOfFloors: number) => {
-//   for (let i = 0; i < numberOfFloors; i++) {
+//   for (let i = 0; i < (0.4*numberOfFloors); i++) {
 //     const elevatorBg = document.createElement('div');
 //     elevatorBg.classList.add('elevatorBg');
-//     elevatorBg.style.top = `${i * 300}px`; 
+//     elevatorBg.style.bottom = `${i * 300}px`; 
 //     document.body.appendChild(elevatorBg);
 //   }
 // };
-
 // createElevatorBackgrounds(numberOfFloors);
