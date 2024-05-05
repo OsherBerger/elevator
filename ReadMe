@@ -33,9 +33,10 @@ The CSS file (`index.css`) contains styles for various elements used in the proj
 It defines the appearance of floor buttons, elevator buttons, and elevator cabins. 
 Additionally, it includes animations for elevator movement and button interactions.
 
-3. **TypeScript/JavaScript Logic**:
- The JavaScript file (`index.js`) contains the core logic of the elevator system. 
- It defines several classes:
+3. **TypeScript Logic**:
+ The TypeScript files (`Building.ts, ElevatorSystem.ts, etc..`) 
+ contains the core logic of the elevator system. 
+ They defines several classes:
 
    - **Floor Class**: Represents a floor in the building.
     It stores the level number of the floor.
