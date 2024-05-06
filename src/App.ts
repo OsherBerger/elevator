@@ -1,4 +1,4 @@
-/** app.ts
+/** App.ts
  * Initializes building objects using the BuildingFactory class.
  * Creates multiple buildings with a specified number of floors and elevators.
  * Gives an option for feature that adds background image dynamically

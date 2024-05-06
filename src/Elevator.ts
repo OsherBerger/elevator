@@ -98,7 +98,6 @@ export class Elevator {
     requestAnimationFrame(animate);
   }
 
-
   /**
    * Requests the elevator to stop at a specific floor.
    * @param floor The target floor.
@@ -111,14 +110,12 @@ export class Elevator {
     }
   }
 
- 
   //Plays a sound when the elevator arrives at a floor.
   playSound() {
     const audio = new Audio('../assets/ding.mp3'); //path is for the bundle.js which is in the dis folder
     audio.play();
     console.log('Ding!');
   }
-
   
   //Updates the elevator's position visually.
   updateElevatorPosition() {
@@ -126,7 +123,6 @@ export class Elevator {
     this.elevatorElement.style.transform = `translateY(${translateY})`;
   }
 
-  
   //Dispatches an event when the elevator arrives at a floor.
   private dispatchArrivalEvent() {
     const arrivalEvent = new CustomEvent('elevatorArrival', {
