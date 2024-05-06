@@ -18,9 +18,8 @@ export class ElevatorSystem {
     this.createElevators();
   }
 
-  /**
-   * Creates elevator instances based on the specified number of elevators.
-   */
+  
+  //Creates elevator instances based on the specified number of elevators.
   private createElevators() {
     for (let i = 0; i < this.numberOfElevators; i++) {
       const elevator = new Elevator(this.createElevatorElement());

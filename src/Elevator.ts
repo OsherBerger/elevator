@@ -111,26 +111,23 @@ export class Elevator {
     }
   }
 
- /**
-   * Plays a sound when the elevator arrives at a floor.
-   */
+ 
+  //Plays a sound when the elevator arrives at a floor.
   playSound() {
     const audio = new Audio('../assets/ding.mp3'); //path is for the bundle.js which is in the dis folder
     audio.play();
     console.log('Ding!');
   }
 
-  /**
-   * Updates the elevator's position visually.
-   */
+  
+  //Updates the elevator's position visually.
   updateElevatorPosition() {
     const translateY = `calc(${this.currentFloor.level} * -110px)`;
     this.elevatorElement.style.transform = `translateY(${translateY})`;
   }
 
-  /**
-   * Dispatches an event when the elevator arrives at a floor.
-   */
+  
+  //Dispatches an event when the elevator arrives at a floor.
   private dispatchArrivalEvent() {
     const arrivalEvent = new CustomEvent('elevatorArrival', {
       detail: {

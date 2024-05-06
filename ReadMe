@@ -7,7 +7,7 @@
 
 **How to change number of Floors/Elevators/Buildings**
   Go to 'src' folder.
-  Go to 'index.ts'.
+  Go to 'App.ts'.
   Change number of Objects as needed.
 
 **How to see all objects, when not all are displayed at zoom = 100%**

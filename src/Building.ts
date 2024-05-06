@@ -23,9 +23,8 @@ export class Building {
     this.setupElevatorArrivalListener();
   }
 
-  /**
-   * Creates floor buttons for each floor of the building.
-   */
+  
+  //Creates floor buttons for each floor of the building.
   private createFloorButtons() {
     const floorButtonsContainer = this.createFloorButtonsContainer();
     for (let i = 0; i <= this.numberOfFloors; i++) {
@@ -103,9 +102,7 @@ export class Building {
     return scrollContainer;
   }
 
-  /**
-   * Initializes the elevator system for the building.
-   */
+  //Initializes the elevator system for the building. 
   private createElevatorSystem() {
     const elevatorsContainer = document.createElement('div');
     elevatorsContainer.classList.add('elevatorsContainer', 'elevator');
@@ -151,7 +148,7 @@ export class Building {
     });
   }
 
-    /**
+  /**
    * Updates the timer for floor buttons indicating elevator arrival.
    * @param targetFloor The floor for which the timer is updated.
    * @param button The button associated with the floor.
@@ -281,5 +278,4 @@ export class Building {
       }
     }, 500);
   }
-
 }
