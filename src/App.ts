@@ -24,7 +24,7 @@ startBuildingFactory(numberOfFloors, numberOfElevators, numberOfBuildings)
  * @param numberOfFloors The number of floors for each building.
  * @param numberOfElevators The number of elevators for each building.
  * @param numberOfBuildings The number of buildings to create.
- */
+*/
 function startBuildingFactory(numberOfFloors: number,numberOfElevators: number,numberOfBuildings:number ){
   const buildingFactory = new BuildingFactory();
   if (numberOfFloors <= 0 || numberOfElevators <= 0) {
@@ -39,19 +39,21 @@ function startBuildingFactory(numberOfFloors: number,numberOfElevators: number,n
 /**
  * Displays an error message using an alert dialog.
  * @param message The error message to display.
- */
+*/
 function displayErrorMessage(message: string) {
   alert(message); 
 }
 
-// // Optional feature: 
-// // Dynamically create elevator background elements
-// const createElevatorBackgrounds = (numberOfFloors: number) => {
-//   for (let i = 0; i < (0.4*numberOfFloors); i++) {
-//     const elevatorBg = document.createElement('div');
-//     elevatorBg.classList.add('elevatorBg');
-//     elevatorBg.style.bottom = `${i * 300}px`; 
-//     document.body.appendChild(elevatorBg);
-//   }
-// };
+// Dynamically create elevator background elements
+const createElevatorBackgrounds = (numberOfFloors: number) => {
+  for (let i = 0; i < (0.4*numberOfFloors); i++) {
+    const elevatorBg = document.createElement('div');
+    elevatorBg.classList.add('elevatorBg');
+    elevatorBg.style.bottom = `${i * 300}px`; 
+    document.body.appendChild(elevatorBg);
+  }
+};
+
+// Optional feature: 
 // createElevatorBackgrounds(numberOfFloors);
+
