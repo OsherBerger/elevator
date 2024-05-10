@@ -1,4 +1,5 @@
-/** Building.ts
+/** 
+ * Building.ts
  * Represents a building with floors and an elevator system.
  * Creates floor buttons, manages elevator requests, and updates floor buttons' timers.
  */
@@ -120,9 +121,7 @@ export class Building {
     this.updateTimer(floor, button);
   }
 
-  /**
-   * Sets up a listener for elevator arrival events.
-   */
+  //Sets up a listener for elevator arrival events.
   private setupElevatorArrivalListener() {
     document.addEventListener('elevatorArrival', (event) => {
       const floorLevel = (event as CustomEvent).detail.floorLevel;

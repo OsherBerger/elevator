@@ -1,4 +1,5 @@
-/**BuildingFactory.ts
+/** 
+ * BuildingFactory.ts
  * Represents a factory class for creating building objects with specified configurations.
  * Creates building elements in the DOM and instantiates Building objects.
  */

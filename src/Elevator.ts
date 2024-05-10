@@ -1,4 +1,5 @@
-/** Elevator.ts
+/** 
+ * Elevator.ts
  * Represents an elevator that can move between floors within a building.
  * Manages the elevator's movement, queue of floor requests, and updates its position visually.
  */
