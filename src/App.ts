@@ -7,14 +7,41 @@
 
 import { BuildingFactory } from "./BuildingFactory";
 
-const buildingFactory = new BuildingFactory();
-
+//Please insert the number of Floors you want  
 const numberOfFloors = 7;
-const numberOfElevators = 3;
-const numberOfBuildings = 2;
 
-for (let i = 0; i < numberOfBuildings; i++) {
-  buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
+//Please insert the number of Elevators you want 
+const numberOfElevators = 3;
+
+//Please insert the number of Buildings you want 
+const numberOfBuildings = 3;
+
+startBuildingFactory(numberOfFloors, numberOfElevators, numberOfBuildings)
+
+/**
+ * Starts the building factory to create buildings.
+ * 
+ * @param numberOfFloors The number of floors for each building.
+ * @param numberOfElevators The number of elevators for each building.
+ * @param numberOfBuildings The number of buildings to create.
+ */
+function startBuildingFactory(numberOfFloors: number,numberOfElevators: number,numberOfBuildings:number ){
+  const buildingFactory = new BuildingFactory();
+  if (numberOfFloors <= 0 || numberOfElevators <= 0) {
+    displayErrorMessage("Number of floors and elevators must be positive integers.");
+  } else {
+    for (let i = 0; i < numberOfBuildings; i++) {
+      buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
+    }
+  }
+}
+
+/**
+ * Displays an error message using an alert dialog.
+ * @param message The error message to display.
+ */
+function displayErrorMessage(message: string) {
+  alert(message); 
 }
 
 // // Optional feature: 
