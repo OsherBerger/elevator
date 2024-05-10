@@ -27,8 +27,8 @@ startBuildingFactory(numberOfFloors, numberOfElevators, numberOfBuildings)
 */
 function startBuildingFactory(numberOfFloors: number,numberOfElevators: number,numberOfBuildings:number ){
   const buildingFactory = new BuildingFactory();
-  if (numberOfFloors <= 0 || numberOfElevators <= 0) {
-    displayErrorMessage("Number of floors and elevators must be positive integers.");
+  if (numberOfFloors <= 0 || numberOfElevators <= 0 || numberOfBuildings <= 0) {
+    displayErrorMessage("Number of floors and elevators and buildings must be positive integers.");
   } else {
     for (let i = 0; i < numberOfBuildings; i++) {
       buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
