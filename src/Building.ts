@@ -72,7 +72,6 @@ export class Building {
   private createBlackLineDiv(): HTMLDivElement {
     const div = document.createElement('div');
     div.classList.add('blackline');
-    div.style.height = '7px';
     return div;
   }
 
@@ -84,7 +83,6 @@ export class Building {
   private createFloorDiv(button: HTMLButtonElement): HTMLDivElement {
     const floorDiv = document.createElement('div');
     floorDiv.classList.add('floor');
-    floorDiv.style.height = '103px';
     floorDiv.appendChild(button);
     return floorDiv;
   }
