@@ -27,9 +27,11 @@ startBuildingFactory(numberOfFloors, numberOfElevators, numberOfBuildings)
 */
 function startBuildingFactory(numberOfFloors: number,numberOfElevators: number,numberOfBuildings:number ){
   const buildingFactory = new BuildingFactory();
+  const errorContainer = document.getElementById('errorContainer')!;
   if (numberOfFloors <= 0 || numberOfElevators <= 0 || numberOfBuildings <= 0) {
     displayErrorMessage("Number of floors,elevators & buildings must be a positive integers.");
   } else {
+    errorContainer.textContent = '';
     for (let i = 0; i < numberOfBuildings; i++) {
       buildingFactory.createBuilding(numberOfFloors, numberOfElevators, i);
     }
@@ -41,7 +43,8 @@ function startBuildingFactory(numberOfFloors: number,numberOfElevators: number,n
  * @param message The error message to display.
 */
 function displayErrorMessage(message: string) {
-  alert(message); 
+  const errorContainer = document.getElementById('errorContainer')!;
+  errorContainer.textContent = message;
 }
 
 // Dynamically create elevator background elements
