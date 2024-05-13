@@ -11,7 +11,7 @@ import { BuildingFactory } from "./BuildingFactory";
 const numberOfFloors = 7;
 
 //Please insert the number of Elevators you want 
-const numberOfElevators = -3;
+const numberOfElevators = 3;
 
 //Please insert the number of Buildings you want 
 const numberOfBuildings = 3;
