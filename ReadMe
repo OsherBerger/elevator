@@ -25,7 +25,7 @@ Here's an overview of the project architecture:
 
 1. **HTML Structure**: 
 The project's HTML file (`index.html`) contains the basic structure of the web page.
- It includes a container (`buildingsContainer`) where the buildings with elevators and floor buttons will be dynamically generated.
+It includes a container (`buildingsContainer`) where the buildings with elevators and floor buttons will be dynamically generated.
 The HTML also includes links to the CSS and JavaScript files.
 
 2. **CSS Styling**:
@@ -34,24 +34,24 @@ It defines the appearance of floor buttons, elevator buttons, and elevator cabin
 Additionally, it includes animations for elevator movement and button interactions.
 
 3. **TypeScript Logic**:
- The TypeScript files (`Building.ts, ElevatorSystem.ts, etc..`) 
- contains the core logic of the elevator system. 
- They defines several classes:
+The TypeScript files (`Building.ts, ElevatorSystem.ts, etc..`) 
+contains the core logic of the elevator system. 
+They defines several classes:
 
-   - **Floor Class**: Represents a floor in the building.
-    It stores the level number of the floor.
-   
-   - **Elevator Class**: Represents an elevator in the system. 
-   It tracks the current floor, movement status, queue of requested floors, and handles elevator movement animations.
-   
-   - **ElevatorSystem Class**: Manages multiple elevators within the building. 
-   It handles requests for elevator service, assigns available elevators to requested floors, and manages elevator queues.
-   
-   - **Building Class**: Represents a building with multiple floors and elevators. 
-   It creates floor buttons and elevator systems within the building, handles elevator arrival events, and updates button colors and timers.
-   
-   - **BuildingFactory Class**: Generates multiple buildings with specified numbers of floors and elevators. 
-   It creates building instances and sets their initial configurations.
+  - **Floor Class**: Represents a floor in the building.
+  It stores the level number of the floor.
+  
+  - **Elevator Class**: Represents an elevator in the system. 
+  It tracks the current floor, movement status, queue of requested floors, and handles elevator movement animations.
+  
+  - **ElevatorSystem Class**: Manages multiple elevators within the building. 
+  It handles requests for elevator service, assigns available elevators to requested floors, and manages elevator queues.
+  
+  - **Building Class**: Represents a building with multiple floors and elevators. 
+  It creates floor buttons and elevator systems within the building, handles elevator arrival events, and updates button colors and timers.
+  
+  - **BuildingFactory Class**: Generates multiple buildings with specified numbers of floors and elevators. 
+  It creates building instances and sets their initial configurations.
 
 4. **Project Initialization**: The script initializes the project by creating buildings with a specified number of floors and elevators. 
 It calculates the necessary margins for arranging the buildings horizontally on the page.
