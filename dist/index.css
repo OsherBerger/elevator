@@ -8,6 +8,10 @@
   background-color: #000000;
 }
 
+body {
+  height: 100vh;
+}
+
 .elevatorBg {/*Optional feature*/
   background-image: url('./assets/elvBg.jpg');
   position: fixed;
