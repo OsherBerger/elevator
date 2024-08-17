@@ -59,4 +59,3 @@ const createElevatorBackgrounds = (numberOfFloors: number) => {
 
 // Optional feature: 
 // createElevatorBackgrounds(numberOfFloors);
-
